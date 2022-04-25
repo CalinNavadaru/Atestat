@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+PROIECTATESTAT/.idea/inspectionProfiles/profiles_settings.xml
+PROIECTATESTAT/.idea/inspectionProfiles/Project_Default.xml
+PROIECTATESTAT/.idea/misc.xml
+PROIECTATESTAT/.idea/modules.xml
+PROIECTATESTAT/.idea/PROIECTATESTAT.iml
