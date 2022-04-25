@@ -25,3 +25,7 @@ class Backend:
             print(x)
 
     #def update_pacienti(self):
+
+    #def inserare_pacient(self):
+
+    #def stergere pacient
