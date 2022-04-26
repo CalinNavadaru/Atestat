@@ -1,6 +1,8 @@
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel, QMainWindow, QPushButton
 from PyQt5 import QtCore, Qt
+
+from UI.GameInterface import GameWindow
 from UI.InformationWindow import InformationWindow
 
 

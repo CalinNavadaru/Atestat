@@ -11,7 +11,6 @@ class InformationWindow(QMainWindow):
         self.setMinimumSize(1280, 720)
         self.setMaximumSize(1280, 720)
         self.setObjectName('InformationWindow')
-        self.grid = QGridLayout()
         self.afiseazaMesaj()
         self.mesaj = None
         stylesheet = '''
