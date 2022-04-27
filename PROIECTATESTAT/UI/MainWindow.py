@@ -1,3 +1,5 @@
+from time import sleep
+
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel, QMainWindow, QPushButton
 from PyQt5 import QtCore, Qt
@@ -9,6 +11,8 @@ from UI.InformationWindow import InformationWindow
 class MainWindow(QMainWindow):  # Opening Window
     def __init__(self):
         super().__init__()
+        self.JocWindow = None
+        self.InfWindow = None
         self.label = None
         self.setWindowTitle('Proiect Atestat')
         self.setMinimumSize(1280, 720)
@@ -20,7 +24,6 @@ class MainWindow(QMainWindow):  # Opening Window
         self.buttonModif = None
         self.titlu = None
         self.setTitle()
-
         stylesheet = '''
     #MainWindow {
         background-image: url(pexels-chokniti-khongchum-2280549.jpg);
@@ -41,8 +44,9 @@ class MainWindow(QMainWindow):  # Opening Window
         self.titlu.show()
 
     def ApasareInf(self):
-        InfWindow = InformationWindow(self)
-        InfWindow.show()
+        self.InfWindow = InformationWindow()
+        self.InfWindow.show()
+
 
     def InitButonInf(self):
         self.buttonInf.setToolTip('Buton pentru informatii')
@@ -52,8 +56,8 @@ class MainWindow(QMainWindow):  # Opening Window
         self.buttonInf.clicked.connect(self.ApasareInf)
 
     def ApasareJoc(self):
-        JocWindow = GameWindow(self)
-        JocWindow.show()
+        self.JocWindow = GameWindow()
+        #self.JocWindow.run()
 
     def InitButonJoc(self):
         self.buttonJoc.setToolTip('Buton pentru informatii')

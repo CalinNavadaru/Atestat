@@ -3,6 +3,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLabel, QGridLayout, QWidget
 
 
+# TODO Pune poza cu tine
 class InformationWindow(QMainWindow):
     def __init__(self, parent=None):
         super(InformationWindow, self).__init__(parent)
@@ -26,7 +27,8 @@ class InformationWindow(QMainWindow):
         self.mesaj = QLabel(self)
         self.mesaj.setText("Aplicatie realizata de Calin Navadaru.\n")
         self.mesaj.text()
-        self.mesaj.setText("Aplicatie realizata de Calin Navadaru.\nIn clasa a 12-C de la Colegiul GR. Moisil Brasov\nVersiunea 1.0")
+        self.mesaj.setText(
+            "Aplicatie realizata de Calin Navadaru.\nIn clasa a 12-C de la Colegiul GR. Moisil Brasov\nVersiunea 1.0")
         self.mesaj.setObjectName("Mesaj")
         stylesheet = '''
             #Mesaj {
@@ -38,6 +40,6 @@ class InformationWindow(QMainWindow):
         self.mesaj.resize(800, 800)
         self.mesaj.move(300, 150)
         self.mesaj.setAlignment(QtCore.Qt.AlignLeft)
-        self.mesaj.setFont(QFont('Times', 40))
+        self.mesaj.setFont(QFont('Times', 30))
         self.mesaj.setWordWrap(True)
         self.mesaj.show()
