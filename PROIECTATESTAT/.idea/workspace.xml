@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="985f2c45-abc5-4bdb-b310-db24713c8738" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Services/GameService.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/GamseServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo/GameRepo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/GameInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/GameInterface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/InformationWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/InformationWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +46,7 @@
     &quot;Notification.DoNotAsk-Download Shared Index&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/pythonProject&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Repo/Atestat/PROIECTATESTAT&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
 }</component>
@@ -216,7 +212,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/UI/GameInterface.py</url>
-          <line>75</line>
+          <line>107</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

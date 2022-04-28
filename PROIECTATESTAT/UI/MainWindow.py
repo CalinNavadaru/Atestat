@@ -58,6 +58,7 @@ class MainWindow(QMainWindow):  # Opening Window
     def ApasareJoc(self):
         self.JocWindow = GameWindow()
         #self.JocWindow.run()
+        #return False
 
     def InitButonJoc(self):
         self.buttonJoc.setToolTip('Buton pentru informatii')
