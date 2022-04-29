@@ -2,10 +2,10 @@ from time import sleep
 
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel, QMainWindow, QPushButton
-from PyQt5 import QtCore, Qt
 
 from UI.GameInterface import GameWindow
 from UI.InformationWindow import InformationWindow
+from UI.TableWindow import TableWindow
 
 
 class MainWindow(QMainWindow):  # Opening Window
@@ -13,6 +13,7 @@ class MainWindow(QMainWindow):  # Opening Window
         super().__init__()
         self.JocWindow = None
         self.InfWindow = None
+        self.ListaWindow = None
         self.label = None
         self.setWindowTitle('Proiect Atestat')
         self.setMinimumSize(1280, 720)
@@ -45,8 +46,12 @@ class MainWindow(QMainWindow):  # Opening Window
 
     def ApasareInf(self):
         self.InfWindow = InformationWindow()
-        self.InfWindow.show()
 
+    def ApasareJoc(self):
+        self.JocWindow = GameWindow()
+
+    def ApasareLista(self):
+        self.ListaWindow = TableWindow()
 
     def InitButonInf(self):
         self.buttonInf.setToolTip('Buton pentru informatii')
@@ -55,13 +60,8 @@ class MainWindow(QMainWindow):  # Opening Window
         self.buttonInf.setFont(QFont('Times', 25))
         self.buttonInf.clicked.connect(self.ApasareInf)
 
-    def ApasareJoc(self):
-        self.JocWindow = GameWindow()
-        #self.JocWindow.run()
-        #return False
-
     def InitButonJoc(self):
-        self.buttonJoc.setToolTip('Buton pentru informatii')
+        self.buttonJoc.setToolTip('Buton pentru joc')
         self.buttonJoc.move(510, 450)
         self.buttonJoc.setMinimumSize(200, 100)
         self.buttonJoc.setFont(QFont('Times', 25))
@@ -75,11 +75,11 @@ class MainWindow(QMainWindow):  # Opening Window
         ##self.buttonModif.clicked.connect(self.ApasareInf)
 
     def InitButonLista(self):
-        self.buttonLista.setToolTip('Buton pentru informatii')
+        self.buttonLista.setToolTip('Buton pentru tabel')
         self.buttonLista.move(510, 175)
         self.buttonLista.setMinimumSize(200, 100)
         self.buttonLista.setFont(QFont('Times', 15))
-        ##self.buttonLista.clicked.connect(self.ApasareInf)
+        self.buttonLista.clicked.connect(self.ApasareLista)
 
     def meniu(self):
         self.buttonInf = QPushButton('Informatii', self)

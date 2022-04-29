@@ -3,7 +3,6 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLabel, QGridLayout, QWidget
 
 
-# TODO Pune poza cu tine
 class InformationWindow(QMainWindow):
     def __init__(self, parent=None):
         super(InformationWindow, self).__init__(parent)
@@ -22,6 +21,7 @@ class InformationWindow(QMainWindow):
     }
 '''
         self.setStyleSheet(stylesheet)
+        self.show()
 
     def afiseazaMesaj(self):
         self.mesaj = QLabel(self)
