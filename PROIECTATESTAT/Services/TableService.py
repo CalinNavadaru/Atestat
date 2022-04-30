@@ -8,3 +8,6 @@ class TableService:
 
     def initTable(self):
         return self.repo.initTable()
+
+    def CautareElement(self, cnp):
+        return self.repo.CautareElement(str(cnp))

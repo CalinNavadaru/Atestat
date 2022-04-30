@@ -1,7 +1,6 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QVBoxLayout, QTableWidget, QTableWidgetItem, QHeaderView, QWidget, QPushButton, QHBoxLayout, \
-    QDialog, QDialogButtonBox
+from PyQt5.QtWidgets import QVBoxLayout, QTableWidget, QTableWidgetItem, QHeaderView, QWidget, QPushButton, QHBoxLayout
 
 from Services.TableService import TableService
 from UI.CautareWindow import CautareWindow
@@ -15,6 +14,7 @@ class TableWindow(QWidget):
         super(TableWindow, self).__init__(parent)
         self.table = QTableWidget()
         self.layoutButon = QHBoxLayout()
+        self.service = TableService()
         self.setGeometry(0, 0, 1280, 720)
         self.setWindowTitle("Lista Pacienti")
         self.butonModif = None
@@ -35,8 +35,8 @@ class TableWindow(QWidget):
         self.show()
 
     def fillTable(self):
-        service = TableService()
-        date = service.initTable()
+
+        date = self.service.initTable()
         for i in range(0, len(date)):
             k = 1
             for x in date[i].values():
@@ -51,7 +51,11 @@ class TableWindow(QWidget):
         self.layoutButon.addWidget(self.butonModif, 1)
 
     def apasareCautare(self):
-        indexWindow = CautareWindow(coloane, self)
+        indexWindow = CautareWindow(coloane, self.service, self)
+        linie = indexWindow.linie
+        print(linie)
+        if linie is not None:
+            self.table.selectRow(linie - 1)
 
     def initButonCautare(self):
         self.butonCautare = QPushButton()
