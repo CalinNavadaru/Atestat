@@ -10,8 +10,8 @@ from UI.InformationWindow import InformationWindow
 from UI.LinkWindow import LinkWindow
 from UI.TableWindow import TableWindow
 
-buttonNames = ('Tabel Pacienti', 'Joc', 'Informatii', 'Linkuri Utile')
-buttonToolTips = ('Buton pentru tabel', 'Buton pentru joc', 'Buton pentru informatii', 'Buton pentru link-uri utile')
+buttonNames = ['Tabel Pacienti', 'Joc', 'Informatii', 'Linkuri Utile']
+buttonToolTips = ['Buton pentru tabel', 'Buton pentru joc', 'Buton pentru informatii', 'Buton pentru link-uri utile']
 
 
 class MainWindow(QMainWindow):  # Opening Window

@@ -74,7 +74,7 @@ class TableWindow(QWidget):
 
     def initButonModif(self):
         self.butonModif = QPushButton()
-        self.butonModif.setText("Modif")
+        self.butonModif.setText("Modificare")
         self.butonModif.setFont(QFont("Times", 20))
         self.butonModif.setMaximumSize(200, 100)
         self.butonModif.clicked.connect(self.apasareModif)
