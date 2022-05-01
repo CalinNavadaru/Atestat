@@ -29,3 +29,6 @@ class CautareWindow(QDialog):
     def input(self):
         self.linie = self.service.CautareElement(self.cnp.text())
         super().accept()
+
+    def getLine(self):
+        return self.linie

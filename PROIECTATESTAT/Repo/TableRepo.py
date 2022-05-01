@@ -28,3 +28,11 @@ class TableRepo:
             if x['CNP'] == cnp:
                 return x['id']
         return None
+
+    def AdaugarePacient(self,coloane : list,  inputPacient : list):
+        mydoc = {}
+        for i in range(0, 7):
+            mydoc[coloane[i]] = inputPacient[i]
+        mydoc['id'] = len(self.data)
+        self.data.append(mydoc)
+        self.col.insert_one(mydoc)

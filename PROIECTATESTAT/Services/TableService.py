@@ -11,3 +11,6 @@ class TableService:
 
     def CautareElement(self, cnp):
         return self.repo.CautareElement(str(cnp))
+
+    def adaugarePacient(self,coloane, inputPacient):
+        self.repo.AdaugarePacient(coloane, inputPacient)

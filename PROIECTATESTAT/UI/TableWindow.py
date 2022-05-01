@@ -3,6 +3,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QVBoxLayout, QTableWidget, QTableWidgetItem, QHeaderView, QWidget, QPushButton, QHBoxLayout
 
 from Services.TableService import TableService
+from UI.AdaugareWindow import AdaugareWindow
 from UI.CautareWindow import CautareWindow
 
 coloane = ['Nume', 'Prenume', 'CNP', 'Data nasterii', 'Adresa', 'Cod Asigurat', 'Boli Cronice']
@@ -17,9 +18,9 @@ class TableWindow(QWidget):
         self.service = TableService()
         self.setGeometry(0, 0, 1280, 720)
         self.setWindowTitle("Lista Pacienti")
-        self.butonModif = None
+        self.butonAdaugare = None
         self.butonCautare = None
-        self.initButonModif()
+        self.initButonAdaugare()
         self.initButonCautare()
         self.createTable()
         self.fillTable()
@@ -43,16 +44,21 @@ class TableWindow(QWidget):
                 self.table.setItem(i, k - 1, QTableWidgetItem(x))
                 k += 1
 
-    def initButonModif(self):
-        self.butonModif = QPushButton()
-        self.butonModif.setText("Modifica tabel")
-        self.butonModif.setFont(QFont("Times", 20))
-        self.butonModif.setMaximumSize(200, 100)
-        self.layoutButon.addWidget(self.butonModif, 1)
+    def apasareAdaugare(self):
+        adaugareWindow = AdaugareWindow(self.service, coloane)
+        self.fillTable()
+
+    def initButonAdaugare(self):
+        self.butonAdaugare = QPushButton()
+        self.butonAdaugare.setText("Adauga")
+        self.butonAdaugare.setFont(QFont("Times", 20))
+        self.butonAdaugare.setMaximumSize(200, 100)
+        self.butonAdaugare.clicked.connect(self.apasareAdaugare)
+        self.layoutButon.addWidget(self.butonAdaugare, 1)
 
     def apasareCautare(self):
         indexWindow = CautareWindow(coloane, self.service, self)
-        linie = indexWindow.linie
+        linie = indexWindow.getLine()
         print(linie)
         if linie is not None:
             self.table.selectRow(linie - 1)
