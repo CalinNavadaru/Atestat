@@ -5,9 +5,11 @@ class TableService:
 
     def __init__(self, date=None):
         self.repo = TableRepo(date)
+        self.data = None
 
     def initTable(self):
-        return self.repo.initTable()
+        self.data = self.repo.initTable()
+        return self.data
 
     def CautareElement(self, cnp):
         return self.repo.cautareElement(str(cnp))
@@ -17,3 +19,9 @@ class TableService:
 
     def modificarePacient(self, coloane, index, inputPacient):
         self.repo.modificarePacient(coloane, index, inputPacient)
+
+    def stergereElement(self, cnp):
+        return self.repo.stergereElement(cnp)
+
+    def getLenData(self):
+        return len(self.data)

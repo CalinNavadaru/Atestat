@@ -17,6 +17,9 @@ class TableRepo:
         for x in mydoc:
             x.pop('_id')
             newdata.append(x)
+            myquery = {"CNP" : x['CNP']}
+            mydoc2 = {'$set' : {'id' : str(k)}}
+            self.col.update_one(myquery, mydoc2)
             x['id'] = k
             k += 1
             self.data.append(x)
@@ -51,4 +54,12 @@ class TableRepo:
             newPacient[coloane[i]] = Pacient[i]
         if k < index:
             return
-        self.col.update_one(oldPacient, {"$set" : newPacient})
+        self.col.update_one(oldPacient, {"$set": newPacient})
+
+    def stergereElement(self, cnp: str):
+        linie = None
+        mydoc = {"CNP": cnp}
+        for x in self.col.find(mydoc):
+            linie = int(x['id'])
+        self.col.delete_one(mydoc)
+        return linie

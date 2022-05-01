@@ -22,7 +22,6 @@ class MainWindow(QMainWindow):  # Opening Window
         self.buttonInf = None
         self.buttonLista = None
         self.buttonJoc = None
-        self.buttonModif = None
         self.titlu = None
         self.setTitle()
         stylesheet = '''
@@ -67,12 +66,6 @@ class MainWindow(QMainWindow):  # Opening Window
         self.buttonJoc.setFont(QFont('Times', 25))
         self.buttonJoc.clicked.connect(self.ApasareJoc)
 
-    def InitButonModif(self):
-        self.buttonModif.setToolTip('Buton pentru informatii')
-        self.buttonModif.move(510, 300)
-        self.buttonModif.setMinimumSize(200, 100)
-        self.buttonModif.setFont(QFont('Times', 15))
-        ##self.buttonModif.clicked.connect(self.ApasareInf)
 
     def InitButonLista(self):
         self.buttonLista.setToolTip('Buton pentru tabel')
@@ -84,9 +77,7 @@ class MainWindow(QMainWindow):  # Opening Window
     def meniu(self):
         self.buttonInf = QPushButton('Informatii', self)
         self.buttonJoc = QPushButton('Joc', self)
-        self.buttonModif = QPushButton('Modificare Tabel', self)
         self.buttonLista = QPushButton("Lista Pacienti", self)
         self.InitButonLista()
-        self.InitButonModif()
         self.InitButonJoc()
         self.InitButonInf()

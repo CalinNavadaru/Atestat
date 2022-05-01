@@ -6,6 +6,7 @@ from Services.TableService import TableService
 from UI.AdaugareWindow import AdaugareWindow
 from UI.CautareWindow import CautareWindow
 from UI.ModifWindow import ModifWindow
+from UI.StergereWindow import StergereWindow
 
 coloane = ['Nume', 'Prenume', 'CNP', 'Data nasterii', 'Adresa', 'Cod Asigurat', 'Boli Cronice']
 
@@ -22,8 +23,10 @@ class TableWindow(QWidget):
         self.butonAdaugare = None
         self.butonCautare = None
         self.butonModif = None
+        self.butonStergere = None
         self.initButonAdaugare()
         self.initButonModif()
+        self.initButonStergere()
         self.initButonCautare()
         self.createTable()
         self.fillTable()
@@ -47,6 +50,12 @@ class TableWindow(QWidget):
                 self.table.setItem(i, k - 1, QTableWidgetItem(x))
                 k += 1
 
+    def apasareStergere(self):
+        stergereWindow = StergereWindow(self.service, coloane)
+        if self.service.getLenData() != 0:
+            self.table.hideRow(stergereWindow.getLinie())
+            self.fillTable()
+
     def apasareAdaugare(self):
         adaugareWindow = AdaugareWindow(self.service, coloane)
         self.fillTable()
@@ -54,6 +63,14 @@ class TableWindow(QWidget):
     def apasareModif(self):
         modifWindow = ModifWindow(self.service, coloane)
         self.fillTable()
+
+    def initButonStergere(self):
+        self.butonStergere = QPushButton()
+        self.butonStergere.setText("Sterge")
+        self.butonStergere.setFont(QFont("Times", 20))
+        self.butonStergere.setMaximumSize(200, 100)
+        self.butonStergere.clicked.connect(self.apasareStergere)
+        self.layoutButon.addWidget(self.butonStergere, 1)
 
     def initButonModif(self):
         self.butonModif = QPushButton()
@@ -72,7 +89,7 @@ class TableWindow(QWidget):
         self.layoutButon.addWidget(self.butonAdaugare, 1)
 
     def apasareCautare(self):
-        indexWindow = CautareWindow(coloane, self.service, self)
+        indexWindow = CautareWindow(self.service, self)
         linie = indexWindow.getLine()
         print(linie)
         if linie is not None:

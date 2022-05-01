@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QFormLayout, QLineEdit
 
 class CautareWindow(QDialog):
 
-    def __init__(self, coloane, service, parent=None):
+    def __init__(self, service, parent=None):
         super().__init__(parent)
         self.service = service
         buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
