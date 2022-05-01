@@ -1,5 +1,5 @@
 from PyQt5 import Qt, QtCore
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QMainWindow
 
 
@@ -8,6 +8,7 @@ class LinkWindow(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Link-uri utile")
+        self.setWindowIcon(QIcon("icons8-information-48.png"))
         self.setFixedSize(800, 600)
         self.setAttribute(QtCore.Qt.WA_StyledBackground)
         self.setObjectName('LinkWindow')
