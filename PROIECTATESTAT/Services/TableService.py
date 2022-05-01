@@ -10,7 +10,10 @@ class TableService:
         return self.repo.initTable()
 
     def CautareElement(self, cnp):
-        return self.repo.CautareElement(str(cnp))
+        return self.repo.cautareElement(str(cnp))
 
-    def adaugarePacient(self,coloane, inputPacient):
-        self.repo.AdaugarePacient(coloane, inputPacient)
+    def adaugarePacient(self, coloane, inputPacient):
+        self.repo.adaugarePacient(coloane, inputPacient)
+
+    def modificarePacient(self, coloane, index, inputPacient):
+        self.repo.modificarePacient(coloane, index, inputPacient)

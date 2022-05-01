@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QTableWidget, QTableWidgetItem, QHeader
 from Services.TableService import TableService
 from UI.AdaugareWindow import AdaugareWindow
 from UI.CautareWindow import CautareWindow
+from UI.ModifWindow import ModifWindow
 
 coloane = ['Nume', 'Prenume', 'CNP', 'Data nasterii', 'Adresa', 'Cod Asigurat', 'Boli Cronice']
 
@@ -20,7 +21,9 @@ class TableWindow(QWidget):
         self.setWindowTitle("Lista Pacienti")
         self.butonAdaugare = None
         self.butonCautare = None
+        self.butonModif = None
         self.initButonAdaugare()
+        self.initButonModif()
         self.initButonCautare()
         self.createTable()
         self.fillTable()
@@ -47,6 +50,18 @@ class TableWindow(QWidget):
     def apasareAdaugare(self):
         adaugareWindow = AdaugareWindow(self.service, coloane)
         self.fillTable()
+
+    def apasareModif(self):
+        modifWindow = ModifWindow(self.service, coloane)
+        self.fillTable()
+
+    def initButonModif(self):
+        self.butonModif = QPushButton()
+        self.butonModif.setText("Modif")
+        self.butonModif.setFont(QFont("Times", 20))
+        self.butonModif.setMaximumSize(200, 100)
+        self.butonModif.clicked.connect(self.apasareModif)
+        self.layoutButon.addWidget(self.butonModif, 1)
 
     def initButonAdaugare(self):
         self.butonAdaugare = QPushButton()

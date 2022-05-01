@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="985f2c45-abc5-4bdb-b310-db24713c8738" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/UI/ModifWindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/icons8-user-24.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Repo/TableRepo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo/TableRepo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/TableService.py" beforeDir="false" afterPath="$PROJECT_DIR$/Services/TableService.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/CautareWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/CautareWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/TableWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/TableWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -224,8 +225,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/UI/TableWindow.py</url>
-          <line>37</line>
+          <line>40</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Repo/TableRepo.py</url>
+          <line>33</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Repo/TableRepo.py</url>
+          <line>41</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
