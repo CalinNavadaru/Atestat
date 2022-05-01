@@ -1,83 +1,132 @@
 from time import sleep
 
+from PyQt5 import QtCore, Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QLabel, QMainWindow, QPushButton
+from PyQt5.QtWidgets import QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QHBoxLayout
 
 from UI.GameInterface import GameWindow
 from UI.InformationWindow import InformationWindow
+from UI.LinkWindow import LinkWindow
 from UI.TableWindow import TableWindow
+
+buttonNames = ('Tabel Pacienti', 'Joc', 'Informatii', 'Linkuri Utile')
+buttonToolTips = ('Buton pentru tabel', 'Buton pentru joc', 'Buton pentru informatii', 'Buton pentru link-uri utile')
 
 
 class MainWindow(QMainWindow):  # Opening Window
+    styleSheetBackground: str
+
     def __init__(self):
         super().__init__()
+        self.func = {
+            "0": self.PressedTableBtn,
+            "1": self.PressedGameBtn,
+            "2": self.PressedInfoBtn,
+            "3": self.PressedLinkBtn
+        }
+        self.styleSheetBtn = None
+        self.styleSheetBackground = None
+        self.styleSheetTitle = None
+        self.initStyleSheets()
+        self.layout = QVBoxLayout()
+        self.widget = QWidget()
         self.JocWindow = None
         self.InfWindow = None
         self.ListaWindow = None
-        self.label = None
+        self.LinkWindow = None
+        self.buttons = []
         self.setWindowTitle('Proiect Atestat')
         self.setMinimumSize(1280, 720)
         self.setMaximumSize(1280, 720)
         self.setObjectName('MainWindow')
-        self.buttonInf = None
-        self.buttonLista = None
-        self.buttonJoc = None
-        self.titlu = None
+        self.title = None
         self.setTitle()
-        stylesheet = '''
-    #MainWindow {
-        background-image: url(pexels-chokniti-khongchum-2280549.jpg);
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-'''
-        self.setStyleSheet(stylesheet)
-        self.meniu()
+        self.initButons()
+        self.layout.setAlignment(QtCore.Qt.AlignTop)
+        self.layout.setSpacing(25)
+        self.widget.setLayout(self.layout)
+        self.setCentralWidget(self.widget)
+
+        self.setStyleSheet(self.styleSheetBackground)
         self.show()
 
-    def setTitle(self):
-        self.titlu = QLabel(self)
-        self.titlu.setText("Aplicatie Atestat")
-        self.titlu.resize(300, 200)
-        self.titlu.move(500, -25)
-        self.setFont(QFont('Times', 25))
-        self.titlu.show()
+    def initStyleSheets(self):
+        self.styleSheetBackground = '''
+                    #MainWindow {
+                        background-image: url(pexels-chokniti-khongchum-2280549.jpg);
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                '''
+        self.styleSheetBtn = '''
+                        #Btn {
+                        background-color: #00b197;
+                        border-style: outset;
+                        border-width: 2px;
+                        border-radius: 15px;
+                        border-color: black;
+                        padding: 4px;
+                        }
+                        '''
+        self.styleSheetTitle = '''
+        #Title {
+            color : black;
+        }
+        '''
 
-    def ApasareInf(self):
+    def setTitle(self):
+        self.title = QLabel()
+        self.title.setText("Aplicatie Atestat")
+        self.title.setFixedSize(250, 200)
+        self.title.setFont(QFont('Times', 25))
+        self.title.setObjectName("Title")
+        self.title.setStyleSheet(self.styleSheetTitle)
+        self.layout.addWidget(self.title, alignment=Qt.AlignCenter)
+
+    def PressedInfoBtn(self):
         self.InfWindow = InformationWindow()
 
-    def ApasareJoc(self):
+    def PressedGameBtn(self):
         self.JocWindow = GameWindow()
 
-    def ApasareLista(self):
+    def PressedTableBtn(self):
         self.ListaWindow = TableWindow()
 
-    def InitButonInf(self):
-        self.buttonInf.setToolTip('Buton pentru informatii')
-        self.buttonInf.move(510, 600)
-        self.buttonInf.setMinimumSize(200, 100)
-        self.buttonInf.setFont(QFont('Times', 25))
-        self.buttonInf.clicked.connect(self.ApasareInf)
+    def PressedLinkBtn(self):
+        self.LinkWindow = LinkWindow()
 
-    def InitButonJoc(self):
-        self.buttonJoc.setToolTip('Buton pentru joc')
-        self.buttonJoc.move(510, 450)
-        self.buttonJoc.setMinimumSize(200, 100)
-        self.buttonJoc.setFont(QFont('Times', 25))
-        self.buttonJoc.clicked.connect(self.ApasareJoc)
+    def initButons(self):
+        for i in range(len(buttonNames)):
+            self.buttons.append(QPushButton(buttonNames[i]))
+            q = QPushButton()
+            self.buttons[i].setToolTip(buttonToolTips[i])
+            self.buttons[i].setFixedSize(325, 150)
+            self.buttons[i].setFont(QFont('Times', 15))
+            self.buttons[i].setObjectName("Btn")
+            self.buttons[i].setStyleSheet(self.styleSheetBtn)
+            self.buttons[i].clicked.connect(self.func[str(i)])
+
+        layoutButtons = QVBoxLayout()
+
+        upperLayout = QHBoxLayout()
+        upperLayout.addWidget(self.buttons[0])
+        upperLayout.addWidget(self.buttons[1])
+        upperLayout.addSpacing(50)
+        upperLayout.setAlignment(QtCore.Qt.AlignCenter)
+
+        lowerLayout = QHBoxLayout()
+        lowerLayout.addWidget(self.buttons[2])
+        lowerLayout.addWidget(self.buttons[3])
+        lowerLayout.addSpacing(50)
+        lowerLayout.setAlignment(QtCore.Qt.AlignCenter)
+
+        layoutButtons.addLayout(upperLayout)
+        layoutButtons.addLayout(lowerLayout)
+        layoutButtons.setSpacing(100)
+
+        layoutButtons.setAlignment(QtCore.Qt.AlignVCenter)
+
+        self.layout.addLayout(layoutButtons)
 
 
-    def InitButonLista(self):
-        self.buttonLista.setToolTip('Buton pentru tabel')
-        self.buttonLista.move(510, 175)
-        self.buttonLista.setMinimumSize(200, 100)
-        self.buttonLista.setFont(QFont('Times', 15))
-        self.buttonLista.clicked.connect(self.ApasareLista)
-
-    def meniu(self):
-        self.buttonInf = QPushButton('Informatii', self)
-        self.buttonJoc = QPushButton('Joc', self)
-        self.buttonLista = QPushButton("Lista Pacienti", self)
-        self.InitButonLista()
-        self.InitButonJoc()
-        self.InitButonInf()
