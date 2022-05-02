@@ -1,40 +1,40 @@
 from PyQt5 import QtCore
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QMainWindow, QLabel, QRadioButton, QWidget, QVBoxLayout, QHBoxLayout, QMessageBox, \
-    QButtonGroup, QGroupBox
+    QButtonGroup
 
 from Services.GameService import GameService
 
-
-# TODO Mai multe Intrebari
-# TODO Restructurare
-# TODO Interfata
 
 class GameWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super(GameWindow, self).__init__(parent)
-        self.layout = QVBoxLayout()
-        self.messagebox = None
-        self.widget = QWidget()
-        self.q1 = None
-        self.q2 = None
-        self.q3 = None
-        self.r1 = None
-        self.r2 = None
-        self.r3 = None
-        self.r4 = None
-        self.r5 = None
-        self.r6 = None
+
         self.setWindowTitle('Joc')
         self.setMinimumSize(1280, 720)
         self.setMaximumSize(1280, 720)
         self.setObjectName('GameWindow')
-        self.Intrebare1()
-        self.Intrebare2()
-        self.Intrebare3()
+
+        self.layout = QVBoxLayout()
+        self.widget = QWidget()
+
+        self.messageBox = None
+        self.intrebari = ("De unde provine oxigenul eliberat prin fotosinteză?",
+                          "Cum se numeşte o singură parte din spirala de ADN?",
+                          "De unde îşi iau plantele nutrienţii?",
+                          'Cum se numesc animalele care mănâncă atât plante cât şi animale?',
+                          'Oreionul este o boală cauzată de…?')
+        self.raspunsuri = (("Din sol", "Din apa"), ("Cromozom", "Codon"), ("Sol", "Apa"), ("Carnivore", "Omnivore"),
+                           ("Virusuri", "Mutatii genetice"))
+        self.grupRaspunsuri = QButtonGroup()
+
+        self.initLayout()
+        self.grupRaspunsuri.buttonClicked.connect(self.verifRasp)
+        
         self.widget.setLayout(self.layout)
         self.setCentralWidget(self.widget)
+
         stylesheet = '''
             #GameWindow {
                 background-image: url(pexels-karolina-grabowska-4210606.jpg);
@@ -45,99 +45,65 @@ class GameWindow(QMainWindow):
         self.setStyleSheet(stylesheet)
         self.show()
 
-    def initMessageBox(self, intrebare):
-        self.messagebox = QMessageBox(self)
-        self.messagebox.setIcon(QMessageBox.Information)
-        self.messagebox.setWindowTitle("Intrebare {}".format(intrebare))
-        self.messagebox.setFont(QFont("Times", 15))
-        self.messagebox.resize(500, 500)
+    def initLayout(self):
+        title = QLabel("Intrebari:", self)
+        title.setFont(QFont("Times", 30))
+        self.layout.addWidget(title, alignment=QtCore.Qt.AlignCenter)
+        self.initIntrebari()
 
-    def verif_rasp(self, intrebare, rasp, r1: QRadioButton):
-        self.initMessageBox(intrebare)
-        service = GameService(intrebare, rasp)
+    def initIntrebari(self):
+
+        for i in range(0, len(self.intrebari)):
+            layoutIntrebare = QVBoxLayout()
+            layoutRaspunsuri = QHBoxLayout()
+
+            q = QLabel(self.intrebari[i], self)
+            r1 = QRadioButton(self.raspunsuri[i][0], self)
+            r2 = QRadioButton(self.raspunsuri[i][1], self)
+            r1.setMinimumSize(50, 50)
+            r2.setMinimumSize(50, 50)
+            r1.setFont(QFont("Times", 15))
+            r2.setFont(QFont("Times", 15))
+            r1.setChecked(False)
+            r2.setChecked(False)
+            q.setFont(QFont("Times", 25))
+
+            self.grupRaspunsuri.addButton(r1, 2 * i)
+            self.grupRaspunsuri.addButton(r2, 2 * i + 1)
+            self.grupRaspunsuri.setExclusive(False)
+
+            layoutIntrebare.addWidget(q, alignment=QtCore.Qt.AlignCenter)
+
+            layoutRaspunsuri.addWidget(r1)
+            layoutRaspunsuri.addWidget(r2)
+            layoutRaspunsuri.setAlignment(QtCore.Qt.AlignCenter)
+
+            layoutIntrebare.addLayout(layoutRaspunsuri)
+            layoutIntrebare.setAlignment(QtCore.Qt.AlignCenter)
+
+            self.layout.addLayout(layoutIntrebare)
+
+    def verifRasp(self, object):
+        self.initMessageBox(self.grupRaspunsuri.id(object) // 2 + 1)
+        service = GameService(self.grupRaspunsuri.id(object) // 2 + 1, object.text())
         mesaj = ''
         if service.verif_raspuns():
             mesaj = 'Corect!'
         else:
             mesaj = 'Gresit!'
 
-        # r1.clicked.disconnect(self.run)
-        r1.setChecked(False)
-        r1.unsetCursor()
-        self.messagebox.setText(mesaj)
-        self.messagebox.exec()
-        self.messagebox.hide()
-        return False
+        self.messageBox.setText(mesaj)
+        self.messageBox.exec()
+        self.messageBox.hide()
+        self.grupRaspunsuri.button(self.grupRaspunsuri.id(object)).setChecked(False)
+        self.grupRaspunsuri.button(self.grupRaspunsuri.id(object)).unsetCursor()
 
-    def initLayoutIntrebare(self, cerinta, buton1, buton2):
-        grupRadio = QButtonGroup()
-        layoutIntrebare = QVBoxLayout()
-        layoutRaspunsuri = QHBoxLayout()
-
-        grupRadio.setExclusive(False)
-        grupRadio.addButton(buton1)
-        grupRadio.addButton(buton2)
-
-        layoutRaspunsuri.addWidget(buton1)
-        layoutRaspunsuri.addWidget(buton2)
-        layoutRaspunsuri.setAlignment(QtCore.Qt.AlignCenter)
-
-        layoutIntrebare.addWidget(cerinta)
-        layoutIntrebare.addLayout(layoutRaspunsuri)
-        layoutIntrebare.setAlignment(QtCore.Qt.AlignCenter)
-        layoutIntrebare.setSpacing(15)
-
-        self.layout.addLayout(layoutIntrebare)
-        self.layout.setAlignment(QtCore.Qt.AlignVCenter)
-        self.layout.setSpacing(30)
-
-    def run(self):
-        if self.r1.isChecked():
-            self.verif_rasp(1, "Din sol", self.r1)
-        elif self.r2.isChecked():
-            self.verif_rasp(1, "Din apa", self.r2)
-
-        elif self.r3.isChecked():
-            self.verif_rasp(2, "Cromozom", self.r3)
-
-        elif self.r4.isChecked():
-            self.verif_rasp(2, "Codon", self.r4)
-
-        elif self.r5.isChecked():
-            self.verif_rasp(3, "Sol", self.r5)
-
-        elif self.r6.isChecked():
-            self.verif_rasp(3, "Apa", self.r6)
-
-    def Intrebare1(self):
-        self.q1 = QLabel("De unde provine oxigenul eliberat prin fotosinteză?")
-        self.q1.setFont(QFont("Times", 25))
-        self.r1 = QRadioButton("Din sol", self)
-        self.r2 = QRadioButton("Din apă", self)
-        self.r1.setChecked(False)
-        self.r2.setChecked(False)
-        self.initLayoutIntrebare(self.q1, self.r1, self.r2)
-        self.r1.clicked.connect(self.run)
-        self.r2.clicked.connect(self.run)
-
-    def Intrebare2(self):
-        self.q2 = QLabel("Cum se numeşte o singură parte din spirala de ADN?")
-        self.q2.setFont(QFont("Times", 25))
-        self.r3 = QRadioButton("Cromozom")
-        self.r4 = QRadioButton("Codon")
-        self.r3.setChecked(False)
-        self.r4.setChecked(False)
-        self.initLayoutIntrebare(self.q2, self.r3, self.r4)
-        self.r3.clicked.connect(self.run)
-        self.r4.clicked.connect(self.run)
-
-    def Intrebare3(self):
-        self.q3 = QLabel("De unde îşi iau plantele nutrienţii?")
-        self.q3.setFont(QFont("Times", 25))
-        self.r5 = QRadioButton("Sol", self)
-        self.r6 = QRadioButton("Apa")
-        self.r5.setChecked(False)
-        self.r6.setChecked(False)
-        self.initLayoutIntrebare(self.q3, self.r5, self.r6)
-        self.r5.clicked.connect(self.run)
-        self.r6.clicked.connect(self.run)
+    def initMessageBox(self, intrebare):
+        self.messageBox = QMessageBox()
+        self.messageBox.setWindowIcon(QIcon("icons8-information-48.png"))
+        self.messageBox.setIcon(QMessageBox.Information)
+        self.messageBox.setWindowTitle("Intrebare {}".format(intrebare))
+        self.messageBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Close)
+        self.messageBox.setEscapeButton(QMessageBox.Close)
+        self.messageBox.setFont(QFont("Times", 10))
+        self.messageBox.resize(self.messageBox.sizeHint())
