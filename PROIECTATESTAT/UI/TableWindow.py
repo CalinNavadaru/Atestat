@@ -56,7 +56,7 @@ class TableWindow(QWidget):
             k += 1
 
     def createTable(self):
-        self.table.setColumnCount(7)
+        self.table.setColumnCount(len(coloane))
         self.table.setHorizontalHeaderLabels(coloane)
         self.table.setAlternatingRowColors(True)
         self.table.setUpdatesEnabled(True)
@@ -86,20 +86,22 @@ class TableWindow(QWidget):
 
     def pressedDelete(self):
         deleteWindow = DeletePacientWindow(self.service, coloane)
-        if self.service.getLenData() != 0:
+        if self.service.getLenData() != 0 and deleteWindow.getLinie() is not None:
             self.table.removeRow(deleteWindow.getLinie())
             self.fillTable()
 
     def pressedAdd(self):
         AddPWindow = AddPacientWindow(self.service, coloane)
         data = AddPWindow.getData()
-        if data['id'] > 25:
-            self.table.setRowCount(self.table.rowCount())
-            self.table.insertRow(data['id'] - 1)
-        k = 1
-        for x in coloane:
-            self.table.setItem(data['id'] - 1, k - 1, QTableWidgetItem(data[x]))
-        self.table.repaint()
+        if data is not None:
+            if int(data['id']) > 25:
+                self.table.insertRow(self.table.rowCount())
+                self.table.setRowCount(self.table.rowCount())
+
+            k = 1
+            for x in coloane:
+                self.table.setItem(int(data['id']) - 1, k - 1, QTableWidgetItem(data[x]))
+                k += 1
 
     def pressedUpdate(self):
         modifWindow = UpdateWindow(self.service, coloane, self.table.rowCount())

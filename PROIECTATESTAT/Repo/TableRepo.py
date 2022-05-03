@@ -17,8 +17,8 @@ class TableRepo:
         for x in mydoc:
             x.pop('_id')
             newdata.append(x)
-            myquery = {"CNP" : x['CNP']}
-            mydoc2 = {'$set' : {'id' : str(k)}}
+            myquery = {"CNP": x['CNP']}
+            mydoc2 = {'$set': {'id': str(k)}}
             self.col.update_one(myquery, mydoc2)
             x['id'] = k
             k += 1
