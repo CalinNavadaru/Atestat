@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QVBoxLayout, QTableWidget, QTableWidgetItem, QHeaderView, QWidget, QPushButton, QHBoxLayout, \
-    QButtonGroup
+    QButtonGroup, QMessageBox
 
 from Services.TableService import TableService
 from UI.AddPacientWindow import AddPacientWindow
@@ -28,11 +28,7 @@ class TableWindow(QWidget):
         self.buttonGroup = QButtonGroup()
 
         self.buttons = []
-
-        self.butonAdaugare = None
-        self.butonCautare = None
-        self.butonModif = None
-        self.butonStergere = None
+        self.messageBox = None
 
         self.initButtons()
         self.createTable()
@@ -90,7 +86,7 @@ class TableWindow(QWidget):
     def pressedDelete(self):
         deleteWindow = DeletePacientWindow(self.service, coloane)
         if self.service.getLenData() != 0:
-            self.table.hideRow(deleteWindow.getLinie())
+            self.table.removeRow(deleteWindow.getLinie())
             self.fillTable()
 
     def pressedAdd(self):
@@ -101,9 +97,24 @@ class TableWindow(QWidget):
         modifWindow = ModifWindow(self.service, coloane)
         self.fillTable()
 
+    def showMessage(self):
+        self.messageBox = QMessageBox()
+        self.messageBox.setWindowIcon(QIcon("icons8-information-48.png"))
+        self.messageBox.setIcon(QMessageBox.Warning)
+        self.messageBox.setWindowTitle("Eroare!")
+        self.messageBox.setStandardButtons(QMessageBox.Ok)
+        self.messageBox.setFont(QFont("Times", 10))
+        self.messageBox.resize(self.messageBox.sizeHint())
+        self.messageBox.setText("Nu exista pacientul!")
+        self.messageBox.exec()
+        self.messageBox.hide()
+
     def pressedSearch(self):
+        self.table.clearSelection()
         indexWindow = SearchPacientWindow(self.service, self)
         linie = indexWindow.getLine()
         print(linie)
         if linie is not None:
             self.table.selectRow(linie - 1)
+        else:
+            self.showMessage()

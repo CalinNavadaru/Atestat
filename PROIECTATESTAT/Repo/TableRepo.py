@@ -36,7 +36,7 @@ class TableRepo:
         mydoc = {}
         for i in range(0, 7):
             mydoc[coloane[i]] = inputPacient[i]
-        mydoc['id'] = len(self.data)
+        mydoc['id'] = len(self.data) + 1
         self.data.append(mydoc)
         self.col.insert_one(mydoc)
 
