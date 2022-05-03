@@ -19,30 +19,35 @@ class MainWindow(QMainWindow):  # Opening Window
 
     def __init__(self):
         super().__init__()
+
+        self.setWindowTitle('Proiect Atestat')
+        self.setMinimumSize(1280, 720)
+        self.setMaximumSize(1280, 720)
+        self.setObjectName('MainWindow')
+
         self.func = {
             "0": self.PressedTableBtn,
             "1": self.PressedGameBtn,
             "2": self.PressedInfoBtn,
             "3": self.PressedLinkBtn
         }
+        self.title = None
         self.styleSheetBtn = None
         self.styleSheetBackground = None
         self.styleSheetTitle = None
-        self.initStyleSheets()
-        self.layout = QVBoxLayout()
-        self.widget = QWidget()
         self.JocWindow = None
         self.InfWindow = None
         self.ListaWindow = None
         self.LinkWindow = None
         self.buttons = []
-        self.setWindowTitle('Proiect Atestat')
-        self.setMinimumSize(1280, 720)
-        self.setMaximumSize(1280, 720)
-        self.setObjectName('MainWindow')
-        self.title = None
+
+        self.layout = QVBoxLayout()
+        self.widget = QWidget()
+
+        self.initStyleSheets()
         self.setTitle()
         self.initButons()
+
         self.layout.setAlignment(QtCore.Qt.AlignTop)
         self.layout.setSpacing(25)
         self.widget.setLayout(self.layout)

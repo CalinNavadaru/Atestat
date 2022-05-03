@@ -20,17 +20,17 @@ class GameWindow(QMainWindow):
         self.widget = QWidget()
 
         self.messageBox = None
-        self.intrebari = ("De unde provine oxigenul eliberat prin fotosinteză?",
+        self.questions = ("De unde provine oxigenul eliberat prin fotosinteză?",
                           "Cum se numeşte o singură parte din spirala de ADN?",
                           "De unde îşi iau plantele nutrienţii?",
                           'Cum se numesc animalele care mănâncă atât plante cât şi animale?',
                           'Oreionul este o boală cauzată de…?')
-        self.raspunsuri = (("Din sol", "Din apa"), ("Cromozom", "Codon"), ("Sol", "Apa"), ("Carnivore", "Omnivore"),
+        self.answers = (("Din sol", "Din apa"), ("Cromozom", "Codon"), ("Sol", "Apa"), ("Carnivore", "Omnivore"),
                            ("Virusuri", "Mutatii genetice"))
-        self.grupRaspunsuri = QButtonGroup()
+        self.groupAnswers = QButtonGroup()
 
         self.initLayout()
-        self.grupRaspunsuri.buttonClicked.connect(self.verifRasp)
+        self.groupAnswers.buttonClicked.connect(self.validateAnswer)
         
         self.widget.setLayout(self.layout)
         self.setCentralWidget(self.widget)
@@ -46,20 +46,20 @@ class GameWindow(QMainWindow):
         self.show()
 
     def initLayout(self):
-        title = QLabel("Intrebari:", self)
+        title = QLabel("Intrebari", self)
         title.setFont(QFont("Times", 30))
         self.layout.addWidget(title, alignment=QtCore.Qt.AlignCenter)
         self.initIntrebari()
 
     def initIntrebari(self):
 
-        for i in range(0, len(self.intrebari)):
-            layoutIntrebare = QVBoxLayout()
-            layoutRaspunsuri = QHBoxLayout()
+        for i in range(0, len(self.questions)):
+            layoutQuestion = QVBoxLayout()
+            layoutAnswer = QHBoxLayout()
 
-            q = QLabel(self.intrebari[i], self)
-            r1 = QRadioButton(self.raspunsuri[i][0], self)
-            r2 = QRadioButton(self.raspunsuri[i][1], self)
+            q = QLabel(self.questions[i], self)
+            r1 = QRadioButton(self.answers[i][0], self)
+            r2 = QRadioButton(self.answers[i][1], self)
             r1.setMinimumSize(50, 50)
             r2.setMinimumSize(50, 50)
             r1.setFont(QFont("Times", 15))
@@ -68,35 +68,35 @@ class GameWindow(QMainWindow):
             r2.setChecked(False)
             q.setFont(QFont("Times", 25))
 
-            self.grupRaspunsuri.addButton(r1, 2 * i)
-            self.grupRaspunsuri.addButton(r2, 2 * i + 1)
-            self.grupRaspunsuri.setExclusive(False)
+            self.groupAnswers.addButton(r1, 2 * i)
+            self.groupAnswers.addButton(r2, 2 * i + 1)
+            self.groupAnswers.setExclusive(False)
 
-            layoutIntrebare.addWidget(q, alignment=QtCore.Qt.AlignCenter)
+            layoutQuestion.addWidget(q, alignment=QtCore.Qt.AlignCenter)
 
-            layoutRaspunsuri.addWidget(r1)
-            layoutRaspunsuri.addWidget(r2)
-            layoutRaspunsuri.setAlignment(QtCore.Qt.AlignCenter)
+            layoutAnswer.addWidget(r1)
+            layoutAnswer.addWidget(r2)
+            layoutAnswer.setAlignment(QtCore.Qt.AlignCenter)
 
-            layoutIntrebare.addLayout(layoutRaspunsuri)
-            layoutIntrebare.setAlignment(QtCore.Qt.AlignCenter)
+            layoutQuestion.addLayout(layoutAnswer)
+            layoutQuestion.setAlignment(QtCore.Qt.AlignCenter)
 
-            self.layout.addLayout(layoutIntrebare)
+            self.layout.addLayout(layoutQuestion)
 
-    def verifRasp(self, object):
-        self.initMessageBox(self.grupRaspunsuri.id(object) // 2 + 1)
-        service = GameService(self.grupRaspunsuri.id(object) // 2 + 1, object.text())
-        mesaj = ''
+    def validateAnswer(self, object):
+        self.initMessageBox(self.groupAnswers.id(object) // 2 + 1)
+        service = GameService(self.groupAnswers.id(object) // 2 + 1, object.text())
+        message = ''
         if service.verif_raspuns():
-            mesaj = 'Corect!'
+            message = 'Corect!'
         else:
-            mesaj = 'Gresit!'
+            message = 'Gresit!'
 
-        self.messageBox.setText(mesaj)
+        self.messageBox.setText(message)
         self.messageBox.exec()
         self.messageBox.hide()
-        self.grupRaspunsuri.button(self.grupRaspunsuri.id(object)).setChecked(False)
-        self.grupRaspunsuri.button(self.grupRaspunsuri.id(object)).unsetCursor()
+        self.groupAnswers.button(self.groupAnswers.id(object)).setChecked(False)
+        self.groupAnswers.button(self.groupAnswers.id(object)).unsetCursor()
 
     def initMessageBox(self, intrebare):
         self.messageBox = QMessageBox()

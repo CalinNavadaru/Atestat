@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QFormLayout, QLineEdit, Q
 from Services import TableService
 
 
-class StergereWindow(QDialog):
+class DeletePacientWindow(QDialog):
 
     def __init__(self, service, coloane, parent=None):
         super().__init__(parent)

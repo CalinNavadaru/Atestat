@@ -12,7 +12,7 @@ class InformationWindow(QMainWindow):
         self.setMaximumSize(1280, 720)
         self.setObjectName('InformationWindow')
 
-        self.mesaj = 'Aplicatie realizata in Python si Mongodb\nde Năvădaru Călin din clasa a 12-C\nde ' \
+        self.message = 'Aplicatie realizata in Python si Mongodb\nde Năvădaru Călin din clasa a 12-C\nde ' \
                      'la Colegiul National Gr. Moisil Brasov\n' \
                      'Email: navadarucalin@yahoo.com\n' \
                      r'Versiune 1.0'
@@ -23,7 +23,7 @@ class InformationWindow(QMainWindow):
         self.layout = QVBoxLayout()
         self.widget = QWidget()
 
-        self.afiseazaMesaj()
+        self.printMessage()
 
         stylesheet = '''
     #InformationWindow {
@@ -38,12 +38,12 @@ class InformationWindow(QMainWindow):
         self.setCentralWidget(self.widget)
         self.show()
 
-    def afiseazaMesaj(self):
+    def printMessage(self):
         self.text = QLabel(self)
         self.text.setFont(QFont("Times", 40))
         self.text.setWordWrap(True)
         self.text.setMinimumSize(900, 400)
-        self.text.setText(self.mesaj)
+        self.text.setText(self.message)
         self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.layout.addWidget(self.text, alignment=QtCore.Qt.AlignCenter)
 

@@ -2,7 +2,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QFormLayout, QLineEdit
 
 
-class AdaugareWindow(QDialog):
+class AddPacientWindow(QDialog):
 
     def __init__(self, service, coloane : list, parent=None):
         super().__init__(parent)
