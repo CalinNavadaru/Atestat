@@ -11,11 +11,11 @@ class TableService:
         self.data = self.repo.initTable()
         return self.data
 
-    def CautareElement(self, cnp):
-        return self.repo.cautareElement(str(cnp))
+    def SearchPacient(self, cnp):
+        return self.repo.SearchPacient(str(cnp))
 
-    def adaugarePacient(self, coloane, inputPacient):
-        self.repo.adaugarePacient(coloane, inputPacient)
+    def AddPacient(self, coloane, inputPacient):
+        return self.repo.AddPacient(coloane, inputPacient)
 
     def modificarePacient(self, coloane, index, inputPacient):
         self.repo.modificarePacient(coloane, index, inputPacient)

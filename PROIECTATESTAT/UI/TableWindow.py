@@ -56,10 +56,10 @@ class TableWindow(QWidget):
             k += 1
 
     def createTable(self):
-        self.table.setRowCount(25)
         self.table.setColumnCount(7)
         self.table.setHorizontalHeaderLabels(coloane)
         self.table.setAlternatingRowColors(True)
+        self.table.setUpdatesEnabled(True)
         self.table.horizontalHeader().setStretchLastSection(True)
         self.table.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch)
@@ -68,6 +68,7 @@ class TableWindow(QWidget):
     def fillTable(self):
 
         date = self.service.initTable()
+        self.table.setRowCount(len(date))
         for i in range(0, len(date)):
             k = 1
             for x in date[i].values():
@@ -90,12 +91,29 @@ class TableWindow(QWidget):
             self.fillTable()
 
     def pressedAdd(self):
-        adaugareWindow = AddPacientWindow(self.service, coloane)
-        self.fillTable()
+        AddPWindow = AddPacientWindow(self.service, coloane)
+        data = AddPWindow.getData()
+        if data['id'] > 25:
+            self.table.setRowCount(self.table.rowCount())
+            self.table.insertRow(data['id'] - 1)
+        k = 1
+        for x in coloane:
+            self.table.setItem(data['id'] - 1, k - 1, QTableWidgetItem(data[x]))
+        self.table.repaint()
 
     def pressedUpdate(self):
         modifWindow = ModifWindow(self.service, coloane)
         self.fillTable()
+
+    def pressedSearch(self):
+        self.table.clearSelection()
+        indexWindow = SearchPacientWindow(self.service, self)
+        linie = indexWindow.getLine()
+        print(linie)
+        if linie is not None:
+            self.table.selectRow(linie - 1)
+        else:
+            self.showMessage()
 
     def showMessage(self):
         self.messageBox = QMessageBox()
@@ -108,13 +126,3 @@ class TableWindow(QWidget):
         self.messageBox.setText("Nu exista pacientul!")
         self.messageBox.exec()
         self.messageBox.hide()
-
-    def pressedSearch(self):
-        self.table.clearSelection()
-        indexWindow = SearchPacientWindow(self.service, self)
-        linie = indexWindow.getLine()
-        print(linie)
-        if linie is not None:
-            self.table.selectRow(linie - 1)
-        else:
-            self.showMessage()

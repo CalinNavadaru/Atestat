@@ -26,19 +26,20 @@ class TableRepo:
 
         return newdata
 
-    def cautareElement(self, cnp: str):
+    def SearchPacient(self, cnp: str):
         for x in self.data:
             if x['CNP'] == cnp:
                 return x['id']
         return None
 
-    def adaugarePacient(self, coloane: list, inputPacient: list):
+    def AddPacient(self, coloane: list, inputPacient: list):
         mydoc = {}
         for i in range(0, 7):
             mydoc[coloane[i]] = inputPacient[i]
         mydoc['id'] = len(self.data) + 1
         self.data.append(mydoc)
         self.col.insert_one(mydoc)
+        return mydoc
 
     def modificarePacient(self, coloane: list, index, Pacient: list):
         oldPacient = {}

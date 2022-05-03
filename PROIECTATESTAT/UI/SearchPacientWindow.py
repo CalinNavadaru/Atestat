@@ -42,7 +42,7 @@ class SearchPacientWindow(QDialog):
 
     def input(self):
         if self.cnp.text() != '' and self.cnp.text().isdigit() == True:
-            self.linie = self.service.CautareElement(self.cnp.text())
+            self.linie = self.service.SearchPacient(self.cnp.text())
             super().accept()
         else:
             self.showMessage()
