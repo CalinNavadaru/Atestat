@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QTableWidget, QTableWidgetItem, QHeader
 from Services.TableService import TableService
 from UI.AddPacientWindow import AddPacientWindow
 from UI.SearchPacientWindow import SearchPacientWindow
-from UI.ModifWindow import ModifWindow
+from UI.ModifWindow import UpdateWindow
 from UI.DeletePacientWindow import DeletePacientWindow
 
 coloane = ('Nume', 'Prenume', 'CNP', 'Data nasterii', 'Adresa', 'Cod Asigurat', 'Boli Cronice')
@@ -102,7 +102,7 @@ class TableWindow(QWidget):
         self.table.repaint()
 
     def pressedUpdate(self):
-        modifWindow = ModifWindow(self.service, coloane)
+        modifWindow = UpdateWindow(self.service, coloane, self.table.rowCount())
         self.fillTable()
 
     def pressedSearch(self):
