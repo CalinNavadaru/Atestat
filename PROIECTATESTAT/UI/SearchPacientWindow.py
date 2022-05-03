@@ -40,8 +40,11 @@ class SearchPacientWindow(QDialog):
         self.messageBox.exec()
         self.messageBox.hide()
 
+    def validateCNP(self):
+        return self.cnp.text() != '' and self.cnp.text().isdigit() == True
+
     def input(self):
-        if self.cnp.text() != '' and self.cnp.text().isdigit() == True:
+        if self.validateCNP():
             self.linie = self.service.SearchPacient(self.cnp.text())
             super().accept()
         else:

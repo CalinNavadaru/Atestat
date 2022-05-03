@@ -25,3 +25,6 @@ class TableService:
 
     def getLenData(self):
         return len(self.data)
+
+    def getData(self):
+        return self.repo.getData()

@@ -64,3 +64,6 @@ class TableRepo:
             linie = int(x['id'])
         self.col.delete_one(mydoc)
         return linie
+
+    def getData(self):
+        return self.data
