@@ -11,7 +11,7 @@ from UI.UpdatePacient import UpdateWindow
 from UI.DeletePacientWindow import DeletePacientWindow
 
 coloane = ('Nume', 'Prenume', 'CNP', 'Data nasterii', 'Adresa', 'Cod Asigurat', 'Boli Cronice')
-buttonNames = ("Adauga", "Modificare", "Sterge", "Cauta in tabel")
+buttonNames = ("Adaugă", "Modificare", "Șterge", "Caută în tabel")
 
 
 class TableWindow(QWidget):

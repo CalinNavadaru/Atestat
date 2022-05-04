@@ -13,8 +13,10 @@ class InformationWindow(QMainWindow):
         self.setObjectName('InformationWindow')
         self.setWindowIcon(QIcon("Poze/icons8-information-48.png"))
 
-        self.message = 'Aplicație realizată in Python si Mongodb de Năvădaru Călin din clasa a 12-C de ' \
-                     'la Colegiul National Gr. Moisil Brașov\n' \
+        self.message = 'Aplicație realizată de Năvădaru Călin din clasa a-12-a C de ' \
+                     'la Colegiul Național Gr. Moisil Brașov ' \
+                        'în limbajul Python și cu ajutorul bazei de date MongoDB.' \
+                       ' \n' \
                      'Email: navadarucalin@yahoo.com\n' \
                      r'Versiune: 1.0'
 
