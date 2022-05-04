@@ -1,5 +1,5 @@
 from PyQt5 import QtCore
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget
 
 
@@ -7,18 +7,20 @@ class InformationWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super(InformationWindow, self).__init__(parent)
-        self.setWindowTitle('Informatii')
-        self.setMinimumSize(1280, 720)
-        self.setMaximumSize(1280, 720)
-        self.setObjectName('InformationWindow')
 
-        self.message = 'Aplicatie realizata in Python si Mongodb\nde Năvădaru Călin din clasa a 12-C\nde ' \
-                     'la Colegiul National Gr. Moisil Brasov\n' \
+        self.setWindowTitle('Informatii')
+        self.setFixedSize(600, 400)
+        self.setObjectName('InformationWindow')
+        self.setWindowIcon(QIcon("Poze/icons8-information-48.png"))
+
+        self.message = 'Aplicație realizată in Python si Mongodb de Năvădaru Călin din clasa a 12-C de ' \
+                     'la Colegiul National Gr. Moisil Brașov\n' \
                      'Email: navadarucalin@yahoo.com\n' \
-                     r'Versiune 1.0'
+                     r'Versiune: 1.0'
 
         self.text = None
-        self.text2 = None
+        self.title = None
+        self.image = None
 
         self.layout = QVBoxLayout()
         self.widget = QWidget()
@@ -27,7 +29,7 @@ class InformationWindow(QMainWindow):
 
         stylesheet = '''
     #InformationWindow {
-        background-image: url(pexels-chokniti-khongchum-2280549.jpg);
+        background-image: url(Poze/pexels-kindel-media-8325716.jpg);
         background-repeat: no-repeat;
         background-position: center;
     }
@@ -39,12 +41,18 @@ class InformationWindow(QMainWindow):
         self.show()
 
     def printMessage(self):
+        self.title = QLabel("Informații", self)
+        self.title.setFont(QFont("Times", 20))
+        self.layout.addWidget(self.title, alignment=QtCore.Qt.AlignCenter)
         self.text = QLabel(self)
-        self.text.setFont(QFont("Times", 40))
+        self.text.setFont(QFont("Times", 15))
         self.text.setWordWrap(True)
-        self.text.setMinimumSize(900, 400)
         self.text.setText(self.message)
         self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.layout.addWidget(self.text, alignment=QtCore.Qt.AlignCenter)
 
-        self.layout.setSpacing(10)
+        self.image = QLabel()
+        self.image.setPixmap(QPixmap("Poze/index.png"))
+        self.layout.addWidget(self.image, alignment=QtCore.Qt.AlignCenter)
+
+        self.layout.setSpacing(20)

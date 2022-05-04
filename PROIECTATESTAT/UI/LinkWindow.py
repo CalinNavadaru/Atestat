@@ -8,14 +8,14 @@ class LinkWindow(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Link-uri utile")
-        self.setWindowIcon(QIcon("icons8-information-48.png"))
+        self.setWindowIcon(QIcon("Poze/icons8-information-48.png"))
         self.setFixedSize(800, 600)
         self.setAttribute(QtCore.Qt.WA_StyledBackground)
         self.setObjectName('LinkWindow')
         self.linkuri = {
-            "Case de asigurari": 'https://www.romedic.ro/case-de-asigurari-de-sanatate-0G1224',
-            "Medicina interna": 'https://www.medicina-interna.ro',
-            "Casa mediciilor din Romania": 'https://www.cmr.ro',
+            "Case de asigurări": 'https://www.romedic.ro/case-de-asigurari-de-sanatate-0G1224',
+            "Medicină internă": 'https://www.medicina-interna.ro',
+            "Casa mediciilor din România": 'https://www.cmr.ro',
             "Portaluri Medicale": 'https://www.romedic.ro/portaluri-medicale-0G27003',
             "Verificare Asigurat": 'http://cas.cnas.ro/page/verificare-asigurat.html'
         }
@@ -42,7 +42,7 @@ class LinkWindow(QWidget):
     def initStyleSheets(self):
         self.styleSheetBackground = '''
                             #LinkWindow {
-                                background-image: url(pexels-kindel-media-8325716.jpg);
+                                background-image: url(Poze/pexels-kindel-media-8325716.jpg);
                                 background-repeat: no-repeat;
                                 background-position: center;
                             }

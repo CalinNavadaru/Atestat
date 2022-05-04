@@ -1,5 +1,3 @@
-from time import sleep
-
 from PyQt5 import QtCore, Qt
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
@@ -10,8 +8,8 @@ from UI.InformationWindow import InformationWindow
 from UI.LinkWindow import LinkWindow
 from UI.TableWindow import TableWindow
 
-buttonNames = ('Tabel Pacienti', 'Joc', 'Informatii', 'Linkuri Utile')
-buttonToolTips = ('Buton pentru tabel', 'Buton pentru joc', 'Buton pentru informatii', 'Buton pentru link-uri utile')
+buttonNames = ('Tabel Pacienți', 'Joc', 'Informații', 'Linkuri Utile')
+buttonToolTips = ('Buton pentru tabel', 'Buton pentru joc', 'Buton pentru informații', 'Buton pentru link-uri utile')
 
 
 class MainWindow(QMainWindow):  # Opening Window
@@ -59,7 +57,7 @@ class MainWindow(QMainWindow):  # Opening Window
     def initStyleSheets(self):
         self.styleSheetBackground = '''
                     #MainWindow {
-                        background-image: url(pexels-chokniti-khongchum-2280549.jpg);
+                        background-image: url(Poze/pexels-chokniti-khongchum-2280549.jpg);
                         background-repeat: no-repeat;
                         background-position: center;
                     }
@@ -94,8 +92,8 @@ class MainWindow(QMainWindow):  # Opening Window
 
     def setTitle(self):
         self.title = QLabel()
-        self.title.setText("Aplicatie Atestat")
-        self.title.setFixedSize(250, 200)
+        self.title.setText("Aplicație Gestiune cabinet medical")
+        self.title.setMinimumSize(250, 200)
         self.title.setFont(QFont('Times', 25))
         self.title.setObjectName("Title")
         self.title.setStyleSheet(self.styleSheetTitle)
@@ -117,21 +115,18 @@ class MainWindow(QMainWindow):  # Opening Window
         upperLayout = QHBoxLayout(self)
         upperLayout.addWidget(self.buttons[0], alignment=QtCore.Qt.AlignCenter)
         upperLayout.addWidget(self.buttons[1], alignment=QtCore.Qt.AlignCenter)
-        upperLayout.addSpacing(50)
         upperLayout.setAlignment(QtCore.Qt.AlignCenter)
+        upperLayout.addSpacing(50)
 
         lowerLayout = QHBoxLayout(self)
         lowerLayout.addWidget(self.buttons[2], alignment=QtCore.Qt.AlignCenter)
         lowerLayout.addWidget(self.buttons[3], alignment=QtCore.Qt.AlignCenter)
-        lowerLayout.addSpacing(50)
         lowerLayout.setAlignment(QtCore.Qt.AlignCenter)
+        lowerLayout.addSpacing(50)
 
         layoutButtons.addLayout(upperLayout)
         layoutButtons.addLayout(lowerLayout)
+        layoutButtons.setAlignment(QtCore.Qt.AlignCenter)
         layoutButtons.setSpacing(50)
 
-        layoutButtons.setAlignment(QtCore.Qt.AlignCenter)
-
         self.layout.addLayout(layoutButtons)
-
-

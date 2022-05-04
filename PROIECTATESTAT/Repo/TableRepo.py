@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pymongo as mongo
 
 client = mongo.MongoClient("mongodb://localhost:27017/")
@@ -16,6 +18,9 @@ class TableRepo:
         k = 1
         for x in mydoc:
             x.pop('_id')
+            temp = datetime.strptime(x['Data nasterii'], '%d-%m-%Y')
+            x['Data nasterii'] = temp.strftime("%d-%m-%Y")
+            print(x['Data nasterii'])
             newdata.append(x)
             myquery = {"CNP": x['CNP']}
             mydoc2 = {'$set': {'id': str(k)}}

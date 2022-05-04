@@ -25,8 +25,8 @@ class GameWindow(QMainWindow):
                           "De unde îşi iau plantele nutrienţii?",
                           'Cum se numesc animalele care mănâncă atât plante cât şi animale?',
                           'Oreionul este o boală cauzată de…?')
-        self.answers = (("Din sol", "Din apa"), ("Cromozom", "Codon"), ("Sol", "Apa"), ("Carnivore", "Omnivore"),
-                           ("Virusuri", "Mutatii genetice"))
+        self.answers = (("Din sol", "Din apa"), ("Cromozom", "Codon"), ("Sol", "Apă"), ("Carnivore", "Omnivore"),
+                           ("Virusuri", "Mutații genetice"))
         self.groupAnswers = QButtonGroup()
 
         self.initLayout()
@@ -37,7 +37,7 @@ class GameWindow(QMainWindow):
 
         stylesheet = '''
             #GameWindow {
-                background-image: url(pexels-karolina-grabowska-4210606.jpg);
+                background-image: url(Poze/pexels-karolina-grabowska-4210606.jpg);
                 background-repeat: no-repeat;
                 background-position: center;
             }
@@ -46,7 +46,7 @@ class GameWindow(QMainWindow):
         self.show()
 
     def initLayout(self):
-        title = QLabel("Intrebari", self)
+        title = QLabel("Intrebări", self)
         title.setFont(QFont("Times", 30))
         self.layout.addWidget(title, alignment=QtCore.Qt.AlignCenter)
         self.initIntrebari()
@@ -90,7 +90,7 @@ class GameWindow(QMainWindow):
         if service.verif_raspuns():
             message = 'Corect!'
         else:
-            message = 'Gresit!'
+            message = 'Greșit!'
 
         self.messageBox.setText(message)
         self.messageBox.exec()
@@ -100,7 +100,7 @@ class GameWindow(QMainWindow):
 
     def initMessageBox(self, intrebare):
         self.messageBox = QMessageBox()
-        self.messageBox.setWindowIcon(QIcon("icons8-information-48.png"))
+        self.messageBox.setWindowIcon(QIcon("Poze/icons8-information-48.png"))
         self.messageBox.setIcon(QMessageBox.Information)
         self.messageBox.setWindowTitle("Intrebare {}".format(intrebare))
         self.messageBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Close)

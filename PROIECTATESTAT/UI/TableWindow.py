@@ -5,8 +5,9 @@ from PyQt5.QtWidgets import QVBoxLayout, QTableWidget, QTableWidgetItem, QHeader
 
 from Services.TableService import TableService
 from UI.AddPacientWindow import AddPacientWindow
+from UI.MessageWindow import MessageWindow
 from UI.SearchPacientWindow import SearchPacientWindow
-from UI.ModifWindow import UpdateWindow
+from UI.UpdatePacient import UpdateWindow
 from UI.DeletePacientWindow import DeletePacientWindow
 
 coloane = ('Nume', 'Prenume', 'CNP', 'Data nasterii', 'Adresa', 'Cod Asigurat', 'Boli Cronice')
@@ -19,7 +20,7 @@ class TableWindow(QWidget):
         super(TableWindow, self).__init__(parent)
 
         self.setGeometry(0, 0, 1280, 720)
-        self.setWindowTitle("Lista Pacienti")
+        self.setWindowTitle("Listă Pacienți")
 
         self.table = QTableWidget()
         self.layoutButtons = QHBoxLayout()
@@ -72,7 +73,7 @@ class TableWindow(QWidget):
         for i in range(0, len(date)):
             k = 1
             for x in date[i].values():
-                self.table.setItem(i, k - 1, QTableWidgetItem(x))
+                self.table.setItem(i, k - 1, QTableWidgetItem(str(x)))
                 k += 1
 
     def handler(self, button):
@@ -85,25 +86,28 @@ class TableWindow(QWidget):
         functions[str(self.buttonGroup.id(button))]()
 
     def pressedDelete(self):
+        self.table.clearSelection()
         deleteWindow = DeletePacientWindow(self.service, coloane)
         if self.service.getLenData() != 0 and deleteWindow.getLinie() is not None:
             self.table.removeRow(deleteWindow.getLinie())
             self.fillTable()
 
     def pressedAdd(self):
+        self.table.clearSelection()
         AddPWindow = AddPacientWindow(self.service, coloane)
         data = AddPWindow.getData()
         if data is not None:
-            if int(data['id']) > 25:
+            if int(data['id']) > self.table.rowCount():
                 self.table.insertRow(self.table.rowCount())
                 self.table.setRowCount(self.table.rowCount())
 
             k = 1
             for x in coloane:
-                self.table.setItem(int(data['id']) - 1, k - 1, QTableWidgetItem(data[x]))
+                self.table.setItem(int(data['id']) - 1, k - 1, QTableWidgetItem(str(data[x])))
                 k += 1
 
     def pressedUpdate(self):
+        self.table.clearSelection()
         modifWindow = UpdateWindow(self.service, coloane, self.table.rowCount())
         self.fillTable()
 
@@ -118,13 +122,4 @@ class TableWindow(QWidget):
             self.showMessage()
 
     def showMessage(self):
-        self.messageBox = QMessageBox()
-        self.messageBox.setWindowIcon(QIcon("icons8-information-48.png"))
-        self.messageBox.setIcon(QMessageBox.Warning)
-        self.messageBox.setWindowTitle("Eroare!")
-        self.messageBox.setStandardButtons(QMessageBox.Ok)
-        self.messageBox.setFont(QFont("Times", 10))
-        self.messageBox.resize(self.messageBox.sizeHint())
-        self.messageBox.setText("Nu exista pacientul!")
-        self.messageBox.exec()
-        self.messageBox.hide()
+        self.messageBox = MessageWindow("Nu exista pacientul")

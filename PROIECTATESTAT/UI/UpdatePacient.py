@@ -1,14 +1,17 @@
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QFormLayout, QLineEdit, QLabel, QMessageBox
 
+from UI.AddPacientWindow import isdate
+from UI.MessageWindow import MessageWindow
+
 
 class UpdateWindow(QDialog):
 
-    def __init__(self, service, coloane : list,nrPacienti : int, parent=None):
+    def __init__(self, service, coloane: list, nrPacienti: int, parent=None):
         super().__init__(parent)
 
         self.setWindowTitle("Modificare Pacient")
-        self.setWindowIcon(QIcon("icons8-user-24.png"))
+        self.setWindowIcon(QIcon("Poze/icons8-user-24.png"))
 
         self.messageBox = None
         self.nrPacienti = nrPacienti
@@ -31,24 +34,34 @@ class UpdateWindow(QDialog):
         self.exec()
 
     def __validateInput(self, userInput):
-        for x in userInput:
-            if x  == '':
+        if type(userInput[0]) != str or type(userInput[1]) != str:
+            return False
+        if not userInput[2].isdigit() or len(userInput[2]) != 13:
+            return False
+        if not isdate(userInput[3]):
+            return False
+        for i in range(4, len(self.coloane)):
+            if type(userInput[i]) is None or userInput[i] == '':
                 return False
 
         return True
 
     def inputUser(self):
         newPacient = [x.text() for x in self.campuri]
-        index = int(self.index.text())
-        if index <= self.nrPacienti and self.__validateInput(newPacient):
-            self.service.modificarePacient(self.coloane, index, newPacient)
-            super().accept()
+        if self.index.text() is not None and all(newPacient) == True:
+            index = int(self.index.text())
+            if index <= self.nrPacienti and self.__validateInput(newPacient):
+                self.service.modificarePacient(self.coloane, index, newPacient)
+                super().accept()
+            else:
+                self.showMessage()
+
         else:
             self.showMessage()
 
     def initLayout(self):
         self.index = QLineEdit(self)
-        self.layout.addRow("Linie: " , self.index)
+        self.layout.addRow("Linie: ", self.index)
 
         mesaj = QLabel("Date pacient")
         self.layout.addWidget(mesaj)
@@ -62,14 +75,4 @@ class UpdateWindow(QDialog):
             self.campuri.append(inputCamp)
 
     def showMessage(self):
-        self.messageBox = QMessageBox()
-        self.messageBox.setWindowIcon(QIcon("icons8-information-48.png"))
-        self.messageBox.setIcon(QMessageBox.Warning)
-        self.messageBox.setWindowTitle("Eroare!")
-        self.messageBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Close)
-        self.messageBox.setEscapeButton(QMessageBox.Close)
-        self.messageBox.setFont(QFont("Times", 10))
-        self.messageBox.resize(self.messageBox.sizeHint())
-        self.messageBox.setText("Ati introdus o valoare gresita/invalida!")
-        self.messageBox.exec()
-        self.messageBox.hide()
+        self.messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
