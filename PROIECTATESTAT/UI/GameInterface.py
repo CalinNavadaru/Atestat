@@ -103,7 +103,7 @@ class GameWindow(QMainWindow):
         self.messageBox = QMessageBox()
         self.messageBox.setWindowIcon(QIcon("Poze/icons8-information-48.png"))
         self.messageBox.setIcon(QMessageBox.Information)
-        self.messageBox.setWindowTitle("Intrebare {}".format(intrebare))
+        self.messageBox.setWindowTitle("Intrebarea {}".format(intrebare))
         self.messageBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Close)
         self.messageBox.setEscapeButton(QMessageBox.Close)
         self.messageBox.setFont(QFont("Times", 10))

@@ -46,7 +46,7 @@ class TableRepo:
         self.col.insert_one(mydoc)
         return mydoc
 
-    def modificarePacient(self, coloane: list, index, Pacient: list):
+    def updatePacient(self, coloane: list, index, Pacient: list):
         oldPacient = {}
         mydoc = self.col.find()
         k = 0
@@ -62,7 +62,7 @@ class TableRepo:
             return
         self.col.update_one(oldPacient, {"$set": newPacient})
 
-    def stergereElement(self, cnp: str):
+    def deletePacient(self, cnp: str):
         linie = None
         mydoc = {"CNP": cnp}
         for x in self.col.find(mydoc):

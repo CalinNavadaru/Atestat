@@ -17,11 +17,11 @@ class TableService:
     def AddPacient(self, coloane, inputPacient):
         return self.repo.AddPacient(coloane, inputPacient)
 
-    def modificarePacient(self, coloane, index, inputPacient):
-        self.repo.modificarePacient(coloane, index, inputPacient)
+    def updatePacient(self, coloane, index, inputPacient):
+        self.repo.updatePacient(coloane, index, inputPacient)
 
-    def stergereElement(self, cnp):
-        return self.repo.stergereElement(cnp)
+    def deletePacient(self, cnp):
+        return self.repo.deletePacient(cnp)
 
     def getLenData(self):
         return len(self.data)

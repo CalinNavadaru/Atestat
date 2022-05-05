@@ -40,14 +40,15 @@ class DeletePacientWindow(QDialog):
         return False
 
     def validateCNP(self):
-        return self.cnp.text() != '' and self.cnp.text().isdigit() == True and self.findCNP()
+        return self.cnp.text() != '' and self.cnp.text().isdigit() == True and len(self.cnp.text()) == 13\
+               and self.findCNP()
 
     def showMessage(self):
         self.messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
 
     def inputUser(self):
         if self.service.getLenData() != 0 and self.validateCNP() == True:
-            self.linie = self.service.stergereElement(self.cnp.text())
+            self.linie = self.service.deletePacient(self.cnp.text().strip())
             super().accept()
         else:
             self.showMessage()

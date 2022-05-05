@@ -38,6 +38,8 @@ class UpdateWindow(QDialog):
             return False
         if not userInput[2].isdigit() or len(userInput[2]) != 13:
             return False
+        if not userInput[5].isdigit() or len(userInput[5]) != 20:
+            return False
         if not isdate(userInput[3]):
             return False
         for i in range(4, len(self.coloane)):
