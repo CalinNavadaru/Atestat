@@ -12,6 +12,7 @@ class GameWindow(QMainWindow):
         super(GameWindow, self).__init__(parent)
 
         self.setWindowTitle('Joc')
+        self.setWindowIcon(QIcon("Poze/football_13302.png"))
         self.setMinimumSize(1280, 720)
         self.setMaximumSize(1280, 720)
         self.setObjectName('GameWindow')
