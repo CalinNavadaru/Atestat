@@ -16,26 +16,26 @@ def isdate(date):
 
 class AddPacientWindow(QDialog):
 
-    def __init__(self, service, coloane: list, parent=None):
+    def __init__(self, service, columns: list, parent=None):
         super().__init__(parent)
 
         self.setWindowTitle("Adăugare Pacient")
         self.setWindowIcon(QIcon("Poze/add-user.png"))
 
-        self.coloane = coloane
-        self.campuri = []
-        self.service = service
-        self.buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
-        self.messageBox = None
-        self.data = None
+        self.__coloane = columns
+        self.__inputFields = []
+        self.__service = service
+        self.__buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
+        self.__messageBox = None
+        self.__data = None
 
-        self.layout = QFormLayout(self)
+        self.__layout = QFormLayout(self)
 
-        self.initCampuri()
+        self.__initCampuri()
 
-        self.layout.addWidget(self.buttonBox)
-        self.buttonBox.accepted.connect(self.inputUser)
-        self.buttonBox.rejected.connect(self.reject)
+        self.__layout.addWidget(self.__buttonBox)
+        self.__buttonBox.accepted.connect(self.__inputUser)
+        self.__buttonBox.rejected.connect(self.reject)
 
         self.setModal(True)
 
@@ -50,28 +50,28 @@ class AddPacientWindow(QDialog):
             return False
         if not isdate(userInput[3]):
             return False
-        for i in range(4, len(self.coloane)):
+        for i in range(4, len(self.__coloane)):
             if type(userInput[i]) is None or userInput[i] == '':
                 return False
 
         return True
 
-    def showMessage(self):
-        self.messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
+    def __showMessage(self):
+        self.__messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
 
-    def inputUser(self):
-        userInput = [x.text() for x in self.campuri]
-        if self.__validateInput(userInput):
-            self.data = self.service.AddPacient(self.coloane, userInput)
+    def __inputUser(self):
+        self.__userInput = [x.text() for x in self.__inputFields]
+        if self.__validateInput(self.__userInput):
+            self.__data = self.__service.AddPacient(self.__coloane, self.__userInput)
             super().accept()
         else:
-            self.showMessage()
+            self.__showMessage()
 
-    def initCampuri(self):
-        for x in self.coloane:
+    def __initCampuri(self):
+        for x in self.__coloane:
             inputCamp = QLineEdit(self)
-            self.layout.addRow(x, inputCamp)
-            self.campuri.append(inputCamp)
+            self.__layout.addRow(x, inputCamp)
+            self.__inputFields.append(inputCamp)
 
     def getData(self):
-        return self.data
+        return self.__data

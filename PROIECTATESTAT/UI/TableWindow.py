@@ -10,7 +10,7 @@ from UI.MessageWindow import MessageWindow
 from UI.SearchPacientWindow import SearchPacientWindow
 from UI.UpdatePacient import UpdateWindow
 
-coloane = ('Nume', 'Prenume', 'CNP', 'Data nasterii', 'Adresa', 'Cod Asigurat', 'Boli Cronice')
+columns = ('Nume', 'Prenume', 'CNP', 'Data nasterii', 'Adresa', 'Cod Asigurat', 'Boli Cronice')
 buttonNames = ("Adaugă", "Modificare", "Șterge", "Caută în tabel")
 
 
@@ -57,8 +57,8 @@ class TableWindow(QWidget):
             k += 1
 
     def __createTable(self):
-        self.__table.setColumnCount(len(coloane))
-        self.__table.setHorizontalHeaderLabels(coloane)
+        self.__table.setColumnCount(len(columns))
+        self.__table.setHorizontalHeaderLabels(columns)
         self.__table.setAlternatingRowColors(True)
         self.__table.setUpdatesEnabled(True)
         self.__table.horizontalHeader().setStretchLastSection(True)
@@ -87,14 +87,14 @@ class TableWindow(QWidget):
 
     def __pressedDelete(self):
         self.__table.clearSelection()
-        deleteWindow = DeletePacientWindow(self.__service, coloane)
+        deleteWindow = DeletePacientWindow(self.__service, columns)
         if self.__service.getLenData() != 0 and deleteWindow.getLine() is not None:
             self.__table.removeRow(deleteWindow.getLine())
             self.__fillTable()
 
     def __pressedAdd(self):
         self.__table.clearSelection()
-        AddPWindow = AddPacientWindow(self.__service, coloane)
+        AddPWindow = AddPacientWindow(self.__service, columns)
         data = AddPWindow.getData()
         if data is not None:
             if int(data['id']) > self.__table.rowCount():
@@ -102,13 +102,13 @@ class TableWindow(QWidget):
                 self.__table.setRowCount(self.__table.rowCount())
 
             k = 1
-            for x in coloane:
+            for x in columns:
                 self.__table.setItem(int(data['id']) - 1, k - 1, QTableWidgetItem(str(data[x])))
                 k += 1
 
     def __pressedUpdate(self):
         self.__table.clearSelection()
-        modifWindow = UpdateWindow(self.__service, coloane, self.__table.rowCount())
+        modifWindow = UpdateWindow(self.__service, columns, self.__table.rowCount())
         self.__fillTable()
 
     def __pressedSearch(self):
