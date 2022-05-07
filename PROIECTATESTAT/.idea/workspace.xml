@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="985f2c45-abc5-4bdb-b310-db24713c8738" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/4233089.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI/AddPacientWindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI/DeletePacientWindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI/SearchPacientWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/AdaugareWindow.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/CautareWindow.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repo/GameRepo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo/GameRepo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/GameInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/GameInterface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/InformationWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/InformationWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/StergereWindow.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/TableWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/TableWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,9 +208,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/UI/GameInterface.py</url>
-          <line>107</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/Repo/GameRepo.py</url>
+          <line>6</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

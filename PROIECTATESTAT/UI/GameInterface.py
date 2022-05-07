@@ -19,40 +19,42 @@ class GameWindow(QMainWindow):
 
         self.layout = QVBoxLayout()
         self.widget = QWidget()
+        self.groupAnswers = QButtonGroup()
 
-        self.messageBox = None
+        self.confirmationBox = None
         self.questions = ("De unde provine oxigenul eliberat prin fotosinteză?",
                           "Cum se numeşte o singură parte din spirala de ADN?",
                           "De unde îşi iau plantele nutrienţii?",
                           'Cum se numesc animalele care mănâncă atât plante cât şi animale?',
                           'Oreionul este o boală cauzată de…?')
+
         self.answers = (("Din sol", "Din apa"), ("Cromozom", "Codon"), ("Sol", "Apă"), ("Carnivore", "Omnivore"),
                            ("Virusuri", "Mutații genetice"))
-        self.groupAnswers = QButtonGroup()
 
-        self.initLayout()
-        self.groupAnswers.buttonClicked.connect(self.validateAnswer)
+        self.stylesheet = '''
+                    #GameWindow {
+                        background-image: url(Poze/pexels-karolina-grabowska-4210606.jpg);
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                '''
+
+        self.__initLayout()
+        self.groupAnswers.buttonClicked.connect(self.__validateAnswer)
         
         self.widget.setLayout(self.layout)
         self.setCentralWidget(self.widget)
 
-        stylesheet = '''
-            #GameWindow {
-                background-image: url(Poze/pexels-karolina-grabowska-4210606.jpg);
-                background-repeat: no-repeat;
-                background-position: center;
-            }
-        '''
-        self.setStyleSheet(stylesheet)
+        self.setStyleSheet(self.stylesheet)
         self.show()
 
-    def initLayout(self):
+    def __initLayout(self):
         title = QLabel("Intrebări", self)
         title.setFont(QFont("Times", 30))
         self.layout.addWidget(title, alignment=QtCore.Qt.AlignCenter)
-        self.initIntrebari()
+        self.__initQuestions()
 
-    def initIntrebari(self):
+    def __initQuestions(self):
 
         for i in range(0, len(self.questions)):
             layoutQuestion = QVBoxLayout()
@@ -61,8 +63,8 @@ class GameWindow(QMainWindow):
             q = QLabel(self.questions[i], self)
             r1 = QRadioButton(self.answers[i][0], self)
             r2 = QRadioButton(self.answers[i][1], self)
-            r1.setMinimumSize(50, 50)
-            r2.setMinimumSize(50, 50)
+            r1.setMinimumSize(65, 65)
+            r2.setMinimumSize(65, 65)
             r1.setFont(QFont("Times", 15))
             r2.setFont(QFont("Times", 15))
             r1.setChecked(False)
@@ -84,8 +86,8 @@ class GameWindow(QMainWindow):
 
             self.layout.addLayout(layoutQuestion)
 
-    def validateAnswer(self, object):
-        self.initMessageBox(self.groupAnswers.id(object) // 2 + 1)
+    def __validateAnswer(self, object):
+        self.__initConfirmationBox(self.groupAnswers.id(object) // 2 + 1)
         service = GameService(self.groupAnswers.id(object) // 2 + 1, object.text())
         message = ''
         if service.verif_raspuns():
@@ -93,18 +95,19 @@ class GameWindow(QMainWindow):
         else:
             message = 'Greșit!'
 
-        self.messageBox.setText(message)
-        self.messageBox.exec()
-        self.messageBox.hide()
+        self.confirmationBox.setText(message)
+        self.confirmationBox.exec()
+        self.confirmationBox.hide()
         self.groupAnswers.button(self.groupAnswers.id(object)).setChecked(False)
         self.groupAnswers.button(self.groupAnswers.id(object)).unsetCursor()
 
-    def initMessageBox(self, intrebare):
-        self.messageBox = QMessageBox()
-        self.messageBox.setWindowIcon(QIcon("Poze/icons8-information-48.png"))
-        self.messageBox.setIcon(QMessageBox.Information)
-        self.messageBox.setWindowTitle("Intrebarea {}".format(intrebare))
-        self.messageBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Close)
-        self.messageBox.setEscapeButton(QMessageBox.Close)
-        self.messageBox.setFont(QFont("Times", 10))
-        self.messageBox.resize(self.messageBox.sizeHint())
+    def __initConfirmationBox(self, intrebare):
+
+        self.confirmationBox = QMessageBox()
+        self.confirmationBox.setWindowIcon(QIcon("Poze/icons8-information-48.png"))
+        self.confirmationBox.setIcon(QMessageBox.Information)
+        self.confirmationBox.setWindowTitle("Intrebarea {}".format(intrebare))
+        self.confirmationBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Close)
+        self.confirmationBox.setEscapeButton(QMessageBox.Close)
+        self.confirmationBox.setFont(QFont("Times", 10))
+        self.confirmationBox.resize(self.confirmationBox.sizeHint())
