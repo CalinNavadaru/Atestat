@@ -1,14 +1,14 @@
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QVBoxLayout, QTableWidget, QTableWidgetItem, QHeaderView, QWidget, QPushButton, QHBoxLayout, \
-    QButtonGroup, QMessageBox
+    QButtonGroup
 
 from Services.TableService import TableService
 from UI.AddPacientWindow import AddPacientWindow
+from UI.DeletePacientWindow import DeletePacientWindow
 from UI.MessageWindow import MessageWindow
 from UI.SearchPacientWindow import SearchPacientWindow
 from UI.UpdatePacient import UpdateWindow
-from UI.DeletePacientWindow import DeletePacientWindow
 
 coloane = ('Nume', 'Prenume', 'CNP', 'Data nasterii', 'Adresa', 'Cod Asigurat', 'Boli Cronice')
 buttonNames = ("Adaugă", "Modificare", "Șterge", "Caută în tabel")
@@ -22,104 +22,101 @@ class TableWindow(QWidget):
         self.setGeometry(0, 0, 1280, 720)
         self.setWindowTitle("Listă Pacienți")
 
-        self.table = QTableWidget()
-        self.layoutButtons = QHBoxLayout()
-        self.service = TableService()
-        self.layout = QVBoxLayout()
-        self.buttonGroup = QButtonGroup()
+        self.__table = QTableWidget()
+        self.__layoutButtons = QHBoxLayout()
+        self.__service = TableService()
+        self.__layout = QVBoxLayout()
+        self.__buttonGroup = QButtonGroup()
 
-        self.buttons = []
-        self.messageBox = None
+        self.__buttons = []
+        self.__messageBox = None
 
-        self.initButtons()
-        self.createTable()
-        self.fillTable()
+        self.__initButtons()
+        self.__createTable()
+        self.__fillTable()
 
-        self.buttonGroup.buttonClicked.connect(self.handler)
+        self.__buttonGroup.buttonClicked.connect(self.__handler)
 
-        self.layoutButtons.setAlignment(QtCore.Qt.AlignLeft)
-        self.layoutButtons.setSpacing(25)
+        self.__layoutButtons.setAlignment(QtCore.Qt.AlignLeft)
+        self.__layoutButtons.setSpacing(25)
 
-        self.layout.addLayout(self.layoutButtons)
-        self.layout.addWidget(self.table)
-        self.setLayout(self.layout)
+        self.__layout.addLayout(self.__layoutButtons)
+        self.__layout.addWidget(self.__table)
+        self.setLayout(self.__layout)
 
         self.show()
 
-    def initButtons(self):
+    def __initButtons(self):
         k = 1
         for btnName in buttonNames:
             button = QPushButton(btnName, self)
             button.setFont(QFont("Times", 20))
             button.setMaximumSize(250, 100)
-            self.buttonGroup.addButton(button, k)
-            self.layoutButtons.addWidget(button, 1)
+            self.__buttonGroup.addButton(button, k)
+            self.__layoutButtons.addWidget(button, 1)
             k += 1
 
-    def createTable(self):
-        self.table.setColumnCount(len(coloane))
-        self.table.setHorizontalHeaderLabels(coloane)
-        self.table.setAlternatingRowColors(True)
-        self.table.setUpdatesEnabled(True)
-        self.table.horizontalHeader().setStretchLastSection(True)
-        self.table.horizontalHeader().setSectionResizeMode(
+    def __createTable(self):
+        self.__table.setColumnCount(len(coloane))
+        self.__table.setHorizontalHeaderLabels(coloane)
+        self.__table.setAlternatingRowColors(True)
+        self.__table.setUpdatesEnabled(True)
+        self.__table.horizontalHeader().setStretchLastSection(True)
+        self.__table.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch)
-        self.table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+        self.__table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
 
-    def fillTable(self):
+    def __fillTable(self):
 
-        date = self.service.initTable()
-        self.table.setRowCount(len(date))
+        date = self.__service.initTable()
+        self.__table.setRowCount(len(date))
         for i in range(0, len(date)):
             k = 1
             for x in date[i].values():
-                self.table.setItem(i, k - 1, QTableWidgetItem(str(x)))
+                self.__table.setItem(i, k - 1, QTableWidgetItem(str(x)))
                 k += 1
 
-    def handler(self, button):
+    def __handler(self, button):
         functions = {
-            "1": self.pressedAdd,
-            "2": self.pressedUpdate,
-            "3": self.pressedDelete,
-            "4": self.pressedSearch
+            "1": self.__pressedAdd,
+            "2": self.__pressedUpdate,
+            "3": self.__pressedDelete,
+            "4": self.__pressedSearch
         }
-        functions[str(self.buttonGroup.id(button))]()
+        functions[str(self.__buttonGroup.id(button))]()
 
-    def pressedDelete(self):
-        self.table.clearSelection()
-        deleteWindow = DeletePacientWindow(self.service, coloane)
-        if self.service.getLenData() != 0 and deleteWindow.getLinie() is not None:
-            self.table.removeRow(deleteWindow.getLinie())
-            self.fillTable()
+    def __pressedDelete(self):
+        self.__table.clearSelection()
+        deleteWindow = DeletePacientWindow(self.__service, coloane)
+        if self.__service.getLenData() != 0 and deleteWindow.getLinie() is not None:
+            self.__table.removeRow(deleteWindow.getLinie())
+            self.__fillTable()
 
-    def pressedAdd(self):
-        self.table.clearSelection()
-        AddPWindow = AddPacientWindow(self.service, coloane)
+    def __pressedAdd(self):
+        self.__table.clearSelection()
+        AddPWindow = AddPacientWindow(self.__service, coloane)
         data = AddPWindow.getData()
         if data is not None:
-            if int(data['id']) > self.table.rowCount():
-                self.table.insertRow(self.table.rowCount())
-                self.table.setRowCount(self.table.rowCount())
+            if int(data['id']) > self.__table.rowCount():
+                self.__table.insertRow(self.__table.rowCount())
+                self.__table.setRowCount(self.__table.rowCount())
 
             k = 1
             for x in coloane:
-                self.table.setItem(int(data['id']) - 1, k - 1, QTableWidgetItem(str(data[x])))
+                self.__table.setItem(int(data['id']) - 1, k - 1, QTableWidgetItem(str(data[x])))
                 k += 1
 
-    def pressedUpdate(self):
-        self.table.clearSelection()
-        modifWindow = UpdateWindow(self.service, coloane, self.table.rowCount())
-        self.fillTable()
+    def __pressedUpdate(self):
+        self.__table.clearSelection()
+        modifWindow = UpdateWindow(self.__service, coloane, self.__table.rowCount())
+        self.__fillTable()
 
-    def pressedSearch(self):
-        self.table.clearSelection()
-        indexWindow = SearchPacientWindow(self.service, self)
+    def __pressedSearch(self):
+        self.__table.clearSelection()
+        indexWindow = SearchPacientWindow(self.__service, self)
         linie = indexWindow.getLine()
-        print(linie)
         if linie is not None:
-            self.table.selectRow(linie - 1)
-        else:
-            self.showMessage()
+            self.__table.selectRow(linie - 1)
 
-    def showMessage(self):
-        self.messageBox = MessageWindow("Nu exista pacientul")
+    def __showMessage(self):
+        self.__messageBox = MessageWindow("Nu exista pacientul")

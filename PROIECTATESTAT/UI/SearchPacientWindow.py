@@ -15,32 +15,32 @@ class SearchPacientWindow(QDialog):
         self.setWindowTitle("Căutare Pacient")
         self.setWindowIcon(QIcon("Poze/icons8-search-96.png"))
 
-        self.linie = None
-        self.messageBox = None
+        self.__line = None
+        self.__messageBox = None
 
-        self.cnp = QLineEdit(self)
-        layout.addRow("CNP", self.cnp)
+        self.__cnp = QLineEdit(self)
+        layout.addRow("CNP", self.__cnp)
 
         layout.addWidget(buttonBox)
-        buttonBox.accepted.connect(self.input)
+        buttonBox.accepted.connect(self.__input)
         buttonBox.rejected.connect(self.reject)
 
         self.setModal(True)
 
         self.exec()
 
-    def showMessage(self):
-        self.messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
+    def __showMessage(self):
+        self.__messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
 
-    def validateCNP(self):
-        return self.cnp.text() != '' and self.cnp.text().isdigit() == True
+    def __validateCNP(self):
+        return self.__cnp.text() != '' and self.__cnp.text().isdigit() == True and len(self.__cnp.text()) == 13
 
-    def input(self):
-        if self.validateCNP():
-            self.linie = self.service.SearchPacient(self.cnp.text())
+    def __input(self):
+        if self.__validateCNP():
+            self.__line = self.service.SearchPacient(self.__cnp.text())
             super().accept()
         else:
-            self.showMessage()
+            self.__showMessage()
 
     def getLine(self):
-        return self.linie
+        return self.__line
