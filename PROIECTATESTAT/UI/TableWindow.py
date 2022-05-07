@@ -88,8 +88,8 @@ class TableWindow(QWidget):
     def __pressedDelete(self):
         self.__table.clearSelection()
         deleteWindow = DeletePacientWindow(self.__service, coloane)
-        if self.__service.getLenData() != 0 and deleteWindow.getLinie() is not None:
-            self.__table.removeRow(deleteWindow.getLinie())
+        if self.__service.getLenData() != 0 and deleteWindow.getLine() is not None:
+            self.__table.removeRow(deleteWindow.getLine())
             self.__fillTable()
 
     def __pressedAdd(self):

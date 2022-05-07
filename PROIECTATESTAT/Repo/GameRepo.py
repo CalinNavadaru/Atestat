@@ -4,17 +4,17 @@ import os
 class GameRepo:
 
     def __init__(self, intrebare, raspuns):
-        self.raspunsuri = []
-        self.init_raspunsuri()
-        self.intrebare = intrebare
-        self.raspuns = raspuns
+        self.__raspunsuri = []
+        self.__init_raspunsuri()
+        self.__intrebare = intrebare
+        self.__raspuns = raspuns
 
-    def init_raspunsuri(self):
+    def __init_raspunsuri(self):
         path_to_file = os.path.join(os.path.dirname(__file__), "Raspunsuri.txt")
         f = open(path_to_file)
         for x in f:
             x = x.strip()
-            self.raspunsuri.append(x)
+            self.__raspunsuri.append(x)
 
     def verificareRaspunsuri(self):
-        return self.raspuns == self.raspunsuri[self.intrebare - 1]
+        return self.__raspuns == self.__raspunsuri[self.__intrebare - 1]

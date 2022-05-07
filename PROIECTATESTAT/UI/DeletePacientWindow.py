@@ -8,50 +8,50 @@ class DeletePacientWindow(QDialog):
 
     def __init__(self, service, coloane, parent=None):
         super().__init__(parent)
-        self.service = service
-        self.coloane = coloane
-        self.linie = None
-        self.messageBox = None
+        self.__service = service
+        self.__coloane = coloane
+        self.__line = None
+        self.__messageBox = None
         self.setWindowTitle("Ștergere Pacient")
         self.setWindowIcon(QIcon("Poze/4233089.png"))
 
-        buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
-        layout = QFormLayout(self)
+        self.__buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
+        self.__layout = QFormLayout(self)
 
         self.cnp = QLineEdit(self)
         mesaj = QLabel("Introduceți datele pacientului:")
-        layout.addWidget(mesaj)
-        layout.addRow("CNP Pacient:", self.cnp)
+        self.__layout.addWidget(mesaj)
+        self.__layout.addRow("CNP Pacient:", self.cnp)
 
-        layout.addWidget(buttonBox)
-        buttonBox.accepted.connect(self.inputUser)
-        buttonBox.rejected.connect(self.reject)
+        self.__layout.addWidget(self.__buttonBox)
+        self.__buttonBox.accepted.connect(self.__inputUser)
+        self.__buttonBox.rejected.connect(self.reject)
 
         self.setModal(True)
 
         self.exec()
 
-    def findCNP(self):
-        data = self.service.getData()
+    def __findCNP(self):
+        data = self.__service.getData()
         for x in data:
             if x['CNP'] == self.cnp.text():
                 return True
 
         return False
 
-    def validateCNP(self):
-        return self.cnp.text() != '' and self.cnp.text().isdigit() == True and len(self.cnp.text()) == 13\
-               and self.findCNP()
+    def __validateCNP(self):
+        return self.cnp.text() != '' and self.cnp.text().isdigit() == True and len(self.cnp.text()) == 13 \
+               and self.__findCNP()
 
-    def showMessage(self):
-        self.messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
+    def __showMessage(self):
+        self.__messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
 
-    def inputUser(self):
-        if self.service.getLenData() != 0 and self.validateCNP() == True:
-            self.linie = self.service.deletePacient(self.cnp.text().strip())
+    def __inputUser(self):
+        if self.__service.getLenData() != 0 and self.__validateCNP() == True:
+            self.__line = self.__service.deletePacient(self.cnp.text().strip())
             super().accept()
         else:
-            self.showMessage()
+            self.__showMessage()
 
-    def getLinie(self):
-        return self.linie
+    def getLine(self):
+        return self.__line
