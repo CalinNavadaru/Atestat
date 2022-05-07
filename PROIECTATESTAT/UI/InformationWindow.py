@@ -46,6 +46,7 @@ class InformationWindow(QMainWindow):
         self.title = QLabel("Informații", self)
         self.title.setFont(QFont("Times", 20))
         self.layout.addWidget(self.title, alignment=QtCore.Qt.AlignCenter)
+
         self.text = QLabel(self)
         self.text.setFont(QFont("Times", 15))
         self.text.setWordWrap(True)

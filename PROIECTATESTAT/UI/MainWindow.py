@@ -13,7 +13,6 @@ buttonToolTips = ('Buton pentru tabel', 'Buton pentru joc', 'Buton pentru inform
 
 
 class MainWindow(QMainWindow):  # Opening Window
-    styleSheetBackground: str
 
     def __init__(self):
         super().__init__()
@@ -24,27 +23,27 @@ class MainWindow(QMainWindow):  # Opening Window
         self.setObjectName('MainWindow')
 
         self.func = {
-            "0": self.PressedTableBtn,
-            "1": self.PressedGameBtn,
-            "2": self.PressedInfoBtn,
-            "3": self.PressedLinkBtn
+            "0": self.__PressedTableBtn,
+            "1": self.__PressedGameBtn,
+            "2": self.__PressedInfoBtn,
+            "3": self.__PressedLinkBtn
         }
         self.title = None
         self.styleSheetBtn = None
         self.styleSheetBackground = None
         self.styleSheetTitle = None
-        self.JocWindow = None
+        self.GameWindow = None
         self.InfWindow = None
-        self.ListaWindow = None
+        self.TableWindow = None
         self.LinkWindow = None
         self.buttons = []
 
         self.layout = QVBoxLayout()
         self.widget = QWidget()
 
-        self.initStyleSheets()
-        self.setTitle()
-        self.initButons()
+        self.__initStyleSheets()
+        self.__setTitle()
+        self.__initButons()
 
         self.layout.setAlignment(QtCore.Qt.AlignTop)
         self.layout.setSpacing(25)
@@ -54,7 +53,7 @@ class MainWindow(QMainWindow):  # Opening Window
         self.setStyleSheet(self.styleSheetBackground)
         self.show()
 
-    def initStyleSheets(self):
+    def __initStyleSheets(self):
         self.styleSheetBackground = '''
                     #MainWindow {
                         background-image: url(Poze/pexels-chokniti-khongchum-2280549.jpg);
@@ -78,19 +77,19 @@ class MainWindow(QMainWindow):  # Opening Window
         }
         '''
 
-    def PressedInfoBtn(self):
+    def __PressedInfoBtn(self):
         self.InfWindow = InformationWindow()
 
-    def PressedGameBtn(self):
-        self.JocWindow = GameWindow()
+    def __PressedGameBtn(self):
+        self.GameWindow = GameWindow()
 
-    def PressedTableBtn(self):
-        self.ListaWindow = TableWindow()
+    def __PressedTableBtn(self):
+        self.TableWindow = TableWindow()
 
-    def PressedLinkBtn(self):
+    def __PressedLinkBtn(self):
         self.LinkWindow = LinkWindow()
 
-    def setTitle(self):
+    def __setTitle(self):
         self.title = QLabel()
         self.title.setText("Aplicație Gestiune cabinet medical")
         self.title.setMinimumSize(250, 200)
@@ -99,7 +98,7 @@ class MainWindow(QMainWindow):  # Opening Window
         self.title.setStyleSheet(self.styleSheetTitle)
         self.layout.addWidget(self.title, alignment=Qt.AlignCenter)
 
-    def initButons(self):
+    def __initButons(self):
         for i in range(len(buttonNames)):
             self.buttons.append(QPushButton(buttonNames[i]))
             q = QPushButton()
