@@ -9,7 +9,7 @@ class SearchPacientWindow(QDialog):
 
     def __init__(self, service, parent=None):
         super().__init__(parent)
-        self.service = service
+        self.__service = service
         buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
         layout = QFormLayout(self)
         self.setWindowTitle("Căutare Pacient")
@@ -37,7 +37,7 @@ class SearchPacientWindow(QDialog):
 
     def __input(self):
         if self.__validateCNP():
-            self.__line = self.service.SearchPacient(self.__cnp.text())
+            self.__line = self.__service.SearchPacient(self.__cnp.text().strip())
             super().accept()
         else:
             self.__showMessage()

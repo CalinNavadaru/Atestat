@@ -26,14 +26,14 @@ class AddPacientWindow(QDialog):
         self.__inputFields = []
         self.__service = service
         self.__buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
-        self.__messageBox = None
+        self.messageBox = None
         self.__data = None
 
-        self.__layout = QFormLayout(self)
+        self.layout = QFormLayout(self)
 
         self.__initCampuri()
 
-        self.__layout.addWidget(self.__buttonBox)
+        self.layout.addWidget(self.__buttonBox)
         self.__buttonBox.accepted.connect(self.__inputUser)
         self.__buttonBox.rejected.connect(self.reject)
 
@@ -57,10 +57,10 @@ class AddPacientWindow(QDialog):
         return True
 
     def __showMessage(self):
-        self.__messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
+        self.messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
 
     def __inputUser(self):
-        self.__userInput = [x.text() for x in self.__inputFields]
+        self.__userInput = [x.text().strip() for x in self.__inputFields]
         if self.__validateInput(self.__userInput):
             self.__data = self.__service.AddPacient(self.__coloane, self.__userInput)
             super().accept()
@@ -70,7 +70,7 @@ class AddPacientWindow(QDialog):
     def __initCampuri(self):
         for x in self.__coloane:
             inputCamp = QLineEdit(self)
-            self.__layout.addRow(x, inputCamp)
+            self.layout.addRow(x, inputCamp)
             self.__inputFields.append(inputCamp)
 
     def getData(self):

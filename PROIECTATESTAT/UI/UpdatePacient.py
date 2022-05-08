@@ -13,7 +13,7 @@ class UpdateWindow(QDialog):
         self.setWindowTitle("Modificare Pacient")
         self.setWindowIcon(QIcon("Poze/icons8-user-24.png"))
 
-        self.__messageBox = None
+        self.messageBox = None
         self.__nrPacienti = nrPacienti
         self.__columns = columns
         self.__inputFields = []
@@ -23,10 +23,10 @@ class UpdateWindow(QDialog):
         self.__service = service
         self.__buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
 
-        self.__layout = QFormLayout(self)
+        self.layout = QFormLayout(self)
         self.__initLayout()
 
-        self.__layout.addWidget(self.__buttonBox)
+        self.layout.addWidget(self.__buttonBox)
         self.__buttonBox.accepted.connect(self.__inputUser)
         self.__buttonBox.rejected.connect(self.reject)
 
@@ -64,18 +64,18 @@ class UpdateWindow(QDialog):
 
     def __initLayout(self):
         self.__index = QLineEdit(self)
-        self.__layout.addRow("Linie: ", self.__index)
+        self.layout.addRow("Linie: ", self.__index)
 
         mesaj = QLabel("Date pacient")
-        self.__layout.addWidget(mesaj)
+        self.layout.addWidget(mesaj)
 
         self.__initCampuri()
 
     def __initCampuri(self):
         for x in self.__columns:
             inputCamp = QLineEdit(self)
-            self.__layout.addRow(x, inputCamp)
+            self.layout.addRow(x, inputCamp)
             self.__inputFields.append(inputCamp)
 
     def __showMessage(self):
-        self.__messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")
+        self.messageBox = MessageWindow("Ați introdus o valoare greșită/invalidă!")

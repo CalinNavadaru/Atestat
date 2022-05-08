@@ -18,10 +18,10 @@ class DeletePacientWindow(QDialog):
         self.__buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
         self.__layout = QFormLayout(self)
 
-        self.cnp = QLineEdit(self)
+        self.__cnp = QLineEdit(self)
         mesaj = QLabel("Introduceți datele pacientului:")
         self.__layout.addWidget(mesaj)
-        self.__layout.addRow("CNP Pacient:", self.cnp)
+        self.__layout.addRow("CNP Pacient:", self.__cnp)
 
         self.__layout.addWidget(self.__buttonBox)
         self.__buttonBox.accepted.connect(self.__inputUser)
@@ -34,13 +34,13 @@ class DeletePacientWindow(QDialog):
     def __findCNP(self):
         data = self.__service.getData()
         for x in data:
-            if x['CNP'] == self.cnp.text():
+            if x['CNP'] == self.__cnp.text():
                 return True
 
         return False
 
     def __validateCNP(self):
-        return self.cnp.text() != '' and self.cnp.text().isdigit() == True and len(self.cnp.text()) == 13 \
+        return self.__cnp.text() != '' and self.__cnp.text().isdigit() == True and len(self.__cnp.text()) == 13 \
                and self.__findCNP()
 
     def __showMessage(self):
@@ -48,7 +48,7 @@ class DeletePacientWindow(QDialog):
 
     def __inputUser(self):
         if self.__service.getLenData() != 0 and self.__validateCNP() == True:
-            self.__line = self.__service.deletePacient(self.cnp.text().strip())
+            self.__line = self.__service.deletePacient(self.__cnp.text().strip())
             super().accept()
         else:
             self.__showMessage()
